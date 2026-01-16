@@ -1,15 +1,29 @@
 # Traffic Accident Visualization Frontend
 
-Frontend application for visualizing traffic accident data in the Republic of Serbia. The application uses data from an official API that collects and processes traffic accident statistics published by the Ministry of Internal Affairs (MUP).
+Frontend application for visualizing traffic accident data for Vlasotince municipality. The application displays traffic accidents on an interactive map and provides filtering capabilities by accident type, category, and time interval.
 
 ## 📋 Description
 
 This project is a React frontend application that enables users to:
 
-- Search traffic accident data by municipalities
-- Filter data by years
-- Visualize data interactively
-- Analyze trends and statistics
+- View traffic accidents on an interactive map for Vlasotince municipality
+- Filter accidents by type (materijalna, povredjeni, poginuli)
+- Filter accidents by category (jedno-vozilo, bez-skretanja, sa-skretanjem, parkirana, pesaci)
+- Filter accidents by time interval (date range)
+- Visualize accident data from 2020-2025
+- Access monthly updated data
+
+**Data Coverage:**
+
+- Time period: 2020-2025
+- Municipality: Vlasotince only
+- Update frequency: Monthly updates
+
+**Data Source:**  
+This application uses official open data from the Republic of Serbia's open data portal [data.gov.rs](https://data.gov.rs/sr/datasets/podatsi-o-saobratshajnim-nezgodama-po-politsijskim-upravama-i-opshtinama/). The data is published by the Ministry of Internal Affairs (MUP) and contains traffic accident statistics for all police stations and municipalities in Serbia.
+
+**Backend API:**  
+This application is built on top of the [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) which provides the data endpoints and filtering capabilities.
 
 ## 🚀 Tech Stack
 
@@ -147,9 +161,26 @@ Strict TypeScript mode is enabled. All files must be type-safe.
 - ⏳ UI components (in progress)
 - ⏳ Data visualization (in progress)
 
+## 🔌 API Integration
+
+This frontend application connects to the [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) backend service.
+
+**API Endpoint:**
+
+- `GET /api/accidents` - Retrieves traffic accident data filtered by police station (pstation), date range, accident type, and categories
+
+**Filtering Options:**
+
+- **Police Station:** Vlasotince (pstation parameter)
+- **Date Range:** startDate and endDate (ISO format: YYYY-MM-DD)
+- **Accident Type:** materijalna, povredjeni, poginuli
+- **Categories:** jedno-vozilo, bez-skretanja, sa-skretanjem, parkirana, pesaci
+
+For detailed API documentation, see the [API repository](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API).
+
 ## 🔗 Related Projects
 
-- [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) - Backend API server
+- [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) - Backend API server that provides traffic accident data
 
 ## 📄 License
 
@@ -161,4 +192,28 @@ Contributions are welcome! Please open an issue or pull request for any suggesti
 
 ---
 
-**Note:** This project uses official open data from the Republic of Serbia for traffic accident analysis.
+## 📊 Data Source
+
+This project uses **official open data** from the Republic of Serbia's open data portal:
+
+**Source:** [Подаци о саобраћајним незгодама по ПОЛИЦИЈСКИМ УПРАВАМА и ОПШТИНАМА](https://data.gov.rs/sr/datasets/podatsi-o-saobratshajnim-nezgodama-po-politsijskim-upravama-i-opshtinama/)
+
+**Publisher:** Ministry of Internal Affairs (MUP) - Republic of Serbia
+
+**License:** Public Data (Јавни подаци)
+
+**Update Frequency:** Monthly
+
+The data is available in XLSX format and contains comprehensive information about traffic accidents including:
+
+- Unique accident ID
+- Police station and municipality
+- Date and time of the accident
+- Geolocation coordinates (X, Y)
+- Accident type (material damage, injuries, fatalities)
+- Accident category
+- Number of vehicles involved
+- Status of participants (injured, deceased)
+- Detailed accident description
+
+All data is processed and made available through the [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) backend service.
