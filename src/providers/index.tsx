@@ -1,9 +1,12 @@
 import AppRouterProvider from "./router/AppRouterProvider";
+import TanstackProvider from "./tanstackquery/TanstackProvider";
 
 const AppProviders = () => {
   return (
     <>
-      <AppRouterProvider />
+      <TanstackProvider>
+        <AppRouterProvider />
+      </TanstackProvider>
     </>
   );
 };
