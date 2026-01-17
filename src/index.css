@@ -183,3 +183,11 @@
 body {
   @apply bg-background text-foreground;
 }
+
+html {
+  color-scheme: light dark;
+}
+
+html * {
+  transition: background-color 0s, color 0s, border-color 0s !important;
+}
