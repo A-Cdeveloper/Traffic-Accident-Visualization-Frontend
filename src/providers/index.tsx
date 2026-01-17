@@ -3,11 +3,9 @@ import TanstackProvider from "./tanstackquery/TanstackProvider";
 
 const AppProviders = () => {
   return (
-    <>
-      <TanstackProvider>
-        <AppRouterProvider />
-      </TanstackProvider>
-    </>
+    <TanstackProvider>
+      <AppRouterProvider />
+    </TanstackProvider>
   );
 };
 

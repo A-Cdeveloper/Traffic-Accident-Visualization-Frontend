@@ -21,9 +21,7 @@ const SideBar = () => {
         )}
       </button>
       <Activity mode={isSidebarOpen ? "visible" : "hidden"}>
-        <div className="h-full p-4 overflow-hidden">
-          {/* Sidebar content */}
-        </div>
+        <div className="h-full p-4 overflow-hidden">Sidebar content</div>
       </Activity>
     </aside>
   );

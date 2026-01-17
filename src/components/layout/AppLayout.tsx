@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import SideBar from "./SideBar";
 import Header from "./Header";
 import Footer from "./Footer";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const AppLayout = () => {
   return (
@@ -12,7 +13,9 @@ const AppLayout = () => {
         <SideBar />
 
         <section className="flex-1 bg-background">
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </section>
       </main>
 
