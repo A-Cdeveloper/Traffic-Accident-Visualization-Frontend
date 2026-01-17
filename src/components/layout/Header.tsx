@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { Link } from "react-router";
 
 const Header = () => {
   const [isDark, setIsDark] = useState(
@@ -14,7 +15,9 @@ const Header = () => {
 
   return (
     <header className="w-full h-16 border-b border-border bg-card flex items-center justify-between px-4 shrink-0">
-      <h1 className="text-xl font-semibold">Traffic Accident Vlasotince</h1>
+      <h1 className="text-xl font-semibold mx-auto">
+        <Link to="/">Traffic Accident Vlasotince</Link>
+      </h1>
       <button
         onClick={toggleTheme}
         className="p-2 hover:bg-muted rounded-md transition-colors"
