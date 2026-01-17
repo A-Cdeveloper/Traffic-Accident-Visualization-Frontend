@@ -2,6 +2,7 @@ import { useState, Activity } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import FilterForm from "@/features/filter/FilterForm";
 
 const SideBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -26,8 +27,8 @@ const SideBar = () => {
       </Button>
       <Activity mode={isSidebarOpen ? "visible" : "hidden"}>
         <div className="h-full overflow-hidden flex flex-col">
-          <div className="flex-1 p-4">filter box</div>
-          <Separator className="w-[90%]! mx-auto" />
+          <div className="flex-1 p-4"><FilterForm /></div>
+          <Separator className="w-[90%]! mx-auto my-6" />
           <div className="flex-1 p-4">info box</div>
           </div>
       </Activity>
