@@ -13,6 +13,7 @@ const SideBar = () => {
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="absolute top-0 -right-8 z-10 p-2 hover:bg-muted  transition-colors bg-card border border-border rounded-none"
+        aria-label="Toggle sidebar"
       >
         {isSidebarOpen ? (
           <ChevronLeft className="w-4 h-4" />
