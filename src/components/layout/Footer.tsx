@@ -24,6 +24,7 @@ const MetaNavigation = () => {
     <nav className="flex items-center gap-4 text-[12px] text-muted-foreground dark:text-muted-foreground/60">
       {naviItems.map((item) => (
         <Link
+          key={item.label}
           to={item.to}
           className="hover:text-foreground dark:hover:text-white"
         >
