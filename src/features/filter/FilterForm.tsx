@@ -11,29 +11,29 @@ import {
 
 const FilterForm = () => {
   return (
-    <form className="space-y-5 text-[13px]">
-      {/* Datum od */}
-      <div className="space-y-2">
-        <label htmlFor="date-from" className="text-[13px] font-medium">
-          Datum od
-        </label>
-        <Input
-          id="date-from"
-          type="date"
-          className="w-full text-[13px] mt-1"
-        />
-      </div>
-
-      {/* Datum do */}
-      <div className="space-y-2">
-        <label htmlFor="date-to" className="text-[13px] font-medium">
-          Datum do
-        </label>
-        <Input
-          id="date-to"
-          type="date"
-          className="w-full text-[13px] mt-1"
-        />
+    <form className="space-y-5 text-[13px] bg-muted p-4 rounded-md">
+      {/* Datum od i do */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="space-y-2">
+          <label htmlFor="date-from" className="text-[13px] font-medium">
+            Datum od
+          </label>
+          <Input
+            id="date-from"
+            type="date"
+            className="w-full text-[13px] mt-1 pr-0 pl-1"
+          />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="date-to" className="text-[13px] font-medium">
+            Datum do
+          </label>
+          <Input
+            id="date-to"
+            type="date"
+            className="w-full text-[13px] mt-1 pr-1 pl-1"
+          />
+        </div>
       </div>
 
       {/* Kategorija */}

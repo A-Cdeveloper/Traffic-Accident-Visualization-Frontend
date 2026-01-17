@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import FilterForm from "@/features/filter/FilterForm";
+import InfoPanel from "@/features/infopanel/InfoPanel";
 
 const SideBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -10,7 +11,7 @@ const SideBar = () => {
   return (
     <aside
       className={`${
-        isSidebarOpen ? "w-65 md:w-80" : "w-0"
+        isSidebarOpen ? "w-65 md:w-85" : "w-0"
       } border-r border-border bg-card transition-all duration-300 overflow-visible shrink-0 relative`}
     >
       <Button
@@ -26,10 +27,10 @@ const SideBar = () => {
         )}
       </Button>
       <Activity mode={isSidebarOpen ? "visible" : "hidden"}>
-        <div className="h-full overflow-hidden flex flex-col">
-          <div className="flex-1 p-4"><FilterForm /></div>
+        <div className="h-full overflow-y-auto flex flex-col py-4">
+          <div className="px-4"><FilterForm /></div>
           <Separator className="w-[90%]! mx-auto my-6" />
-          <div className="flex-1 p-4">info box</div>
+          <div className="flex-1 px-4"><InfoPanel /></div>
           </div>
       </Activity>
     </aside>
