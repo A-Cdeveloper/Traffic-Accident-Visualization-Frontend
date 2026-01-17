@@ -21,7 +21,7 @@ const naviItems = [
  */
 const MetaNavigation = () => {
   return (
-    <nav className="flex items-center gap-4 text-[12px] text-muted-foreground dark:text-muted-foreground/60">
+    <nav className="flex items-center gap-4 text-[12px] text-muted-foreground dark:text-muted-foreground/60 justify-center sm:justify-start">
       {naviItems.map((item) => (
         <Link
           key={item.label}
@@ -47,9 +47,9 @@ const MetaNavigation = () => {
  */
 const Footer = () => {
   return (
-    <footer className="w-full h-12 border-t border-border bg-card flex items-center justify-between shrink-0 gap-4 px-6">
-      <p className="text-[12px] text-muted-foreground dark:text-muted-foreground/60">
-        © {new Date().getFullYear()} Traffic Accident Vlasotince | All rights
+    <footer className="w-full border-t border-border bg-card flex flex-col sm:flex-row sm:items-center justify-between shrink-0 gap-1 sm:gap-4 px-6 text-center sm:text-left py-3">
+      <p className="text-[12px] text-muted-foreground dark:text-muted-foreground/60 mb-0">
+      {new Date().getFullYear()} © All rights
         reserved |{" "}
         <Link to="https://e-seo.info" target="_blank">
           E-SEO TEAM
