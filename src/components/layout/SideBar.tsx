@@ -17,7 +17,7 @@ const SideBar = () => {
       <Button
         variant="ghost"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="absolute top-0 -right-[42px] z-10 p-2 hover:bg-muted  transition-colors bg-card border border-border rounded-none cursor-pointer"
+        className="absolute top-0  -right-[42px] z-9999 p-2 hover:bg-muted  transition-colors bg-card border border-border rounded-none cursor-pointer"
         aria-label="Toggle sidebar"
       >
         {isSidebarOpen ? (

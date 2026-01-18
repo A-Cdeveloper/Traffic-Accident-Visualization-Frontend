@@ -1,9 +1,7 @@
-
+import Map from "@/features/map/Map";
 const HomePage = () => {
 
-  return <><h1 className="text-2xl font-bold">HomePage</h1>
-
-  </>;
+  return <Map />;
 };
 
 export default HomePage;
