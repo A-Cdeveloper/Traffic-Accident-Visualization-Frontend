@@ -1,4 +1,4 @@
-# Traffic Accident Visualization Frontend
+# Traffic Accident Vlasotince (2020-2025)
 
 Frontend application for visualizing traffic accident data for Vlasotince municipality. The application displays traffic accidents on an interactive map and provides filtering capabilities by accident type, category, and time interval.
 
@@ -6,18 +6,20 @@ Frontend application for visualizing traffic accident data for Vlasotince munici
 
 This project is a React frontend application that enables users to:
 
-- View traffic accidents on an interactive map for Vlasotince municipality
-- Filter accidents by type (materijalna, povredjeni, poginuli)
-- Filter accidents by category (jedno-vozilo, bez-skretanja, sa-skretanjem, parkirana, pesaci)
-- Filter accidents by time interval (date range)
-- Visualize accident data from 2020-2025
-- Access monthly updated data
+*   View traffic accidents on an interactive map for Vlasotince municipality
+*   Filter accidents by type (materijalna, povredjeni, poginuli) - dynamically loaded from API
+*   Filter accidents by category (jedno-vozilo, bez-skretanja, skretanje-prelazak, parkirana, pesaci) - dynamically loaded from API
+*   Filter accidents by time interval (date range: 2020-01-01 to today)
+*   View accident statistics in the info panel (total count, counts by category and type)
+*   Shareable filter URLs - filter state is synced with URL parameters
+*   Visualize accident data from 2020-2025
+*   Access monthly updated data
 
 **Data Coverage:**
 
-- Time period: 2020-2025
-- Municipality: Vlasotince only
-- Update frequency: Monthly updates
+*   Time period: 2020-2025
+*   Municipality: Vlasotince only
+*   Update frequency: Monthly updates
 
 **Data Source:**  
 This application uses official open data from the Republic of Serbia's open data portal [data.gov.rs](https://data.gov.rs/sr/datasets/podatsi-o-saobratshajnim-nezgodama-po-politsijskim-upravama-i-opshtinama/). The data is published by the Ministry of Internal Affairs (MUP) and contains traffic accident statistics for all police stations and municipalities in Serbia.
@@ -27,21 +29,25 @@ This application is built on top of the [Traffic-Accident-Visualization-API](htt
 
 ## 🚀 Tech Stack
 
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **Tailwind CSS v4** - Utility-first CSS framework
-- **shadcn/ui** - UI components
-- **TanStack Query (React Query)** - Server state management
-- **React Router** - Routing
-- **Lucide React** - Icons
+*   **React 19** - UI library
+*   **TypeScript** - Type safety
+*   **Vite** - Build tool and dev server
+*   **Tailwind CSS v4** - Utility-first CSS framework
+*   **shadcn/ui** - UI components
+*   **TanStack Query (React Query)** - Server state management
+*   **React Router** - Routing
+*   **nuqs** - URL state management
+*   **sonner** - Toast notifications
+*   **Lucide React** - Icons
+*   **Husky** - Git hooks for code quality
+*   **ESLint** - Code linting with jsx-a11y plugin
 
 ## 📦 Installation
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or yarn
+*   Node.js 18+
+*   npm or yarn
 
 ### Steps
 
@@ -100,27 +106,44 @@ npm run preview
 
 # Linting
 npm run lint
+
+# Type checking
+npm run type-check
 ```
 
 ## 📁 Project Structure
 
 ```
 frontend/
-├── public/              # Static files
+├── public/                    # Static files
 ├── src/
-│   ├── assets/         # Images, fonts, etc.
-│   ├── components/     # React components
-│   │   └── ui/         # shadcn/ui components
-│   ├── hooks/          # Custom React hooks
-│   ├── lib/            # Utility functions and configurations
-│   ├── App.tsx         # Main App component
-│   ├── main.tsx        # Entry point
-│   └── index.css       # Global styles
-├── .env                # Environment variables (create)
-├── components.json     # shadcn/ui configuration
-├── package.json        # Dependencies
-├── tsconfig.json       # TypeScript configuration
-└── vite.config.ts      # Vite configuration
+│   ├── assets/               # Images, fonts, etc.
+│   ├── components/           # React components
+│   │   ├── common/          # Shared components
+│   │   ├── layout/         # Layout components (Header, SideBar, Footer)
+│   │   └── ui/             # shadcn/ui components
+│   ├── features/           # Feature-based modules
+│   │   ├── accidents/      # Accident data feature
+│   │   │   ├── api/       # API functions
+│   │   │   └── hooks/     # React Query hooks
+│   │   ├── filter/        # Filter feature
+│   │   │   ├── api/       # Filter API functions
+│   │   │   └── hooks/     # Filter hooks
+│   │   └── infopanel/     # Info panel feature
+│   ├── hooks/              # Custom React hooks
+│   ├── lib/                # Utility functions and configurations
+│   ├── pages/              # Page components
+│   ├── providers/          # React context providers
+│   ├── types/              # TypeScript type definitions
+│   ├── utils/              # Utility functions (dates, etc.)
+│   ├── main.tsx           # Entry point
+│   └── index.css          # Global styles
+├── .env                    # Environment variables (create)
+├── .husky/                # Git hooks
+├── components.json        # shadcn/ui configuration
+├── package.json           # Dependencies
+├── tsconfig.json          # TypeScript configuration
+└── vite.config.ts         # Vite configuration
 ```
 
 ## 🎨 UI Components
@@ -150,37 +173,77 @@ import { Button } from "@/components/ui/button";
 
 Strict TypeScript mode is enabled. All files must be type-safe.
 
+### Code Quality
+
+The project uses several tools to ensure code quality:
+
+*   **ESLint** - Code linting with jsx-a11y plugin for accessibility
+*   **TypeScript** - Type checking with `npm run type-check`
+*   **Husky** - Git hooks that run linting and type-checking before commits
+*   **React Compiler** - Automatic optimization of React components
+
+Pre-commit hooks automatically run:
+
+*   `npm run lint` - Checks for linting errors
+*   `npm run type-check` - Validates TypeScript types
+
+### Accessibility (a11y)
+
+The project follows WCAG accessibility standards:
+
+*   All interactive elements have proper ARIA labels
+*   Semantic HTML structure
+*   Keyboard navigation support
+*   Screen reader compatibility
+
 ## 📝 Status
 
-- ✅ Project setup (React + Vite + TypeScript)
-- ✅ Tailwind CSS v4 configuration
-- ✅ shadcn/ui setup
-- ✅ React Query installed
-- ✅ React Router installed
-- ⏳ API integration (in progress)
-- ⏳ UI components (in progress)
-- ⏳ Data visualization (in progress)
+*   ✅ Project setup (React + Vite + TypeScript)
+*   ✅ Tailwind CSS v4 configuration
+*   ✅ shadcn/ui setup
+*   ✅ React Query installed and configured
+*   ✅ React Router installed and configured
+*   ✅ nuqs URL state management integrated
+*   ✅ Sonner toast notifications integrated
+*   ✅ ESLint with jsx-a11y plugin configured
+*   ✅ Husky git hooks configured
+*   ✅ API integration (accidents and metadata endpoints)
+*   ✅ Filter form with date validation
+*   ✅ Info panel with dynamic statistics
+*   ⏳ Map visualization (in progress)
 
 ## 🔌 API Integration
 
 This frontend application connects to the [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) backend service.
 
-**API Endpoint:**
+**API Endpoints:**
 
-- `GET /api/accidents` - Retrieves traffic accident data filtered by police station (pstation), date range, accident type, and categories
+*   `GET /api/accidents` - Retrieves traffic accident data filtered by police station (pstation), date range, accident type, and categories
+*   `GET /api/metadata` - Retrieves available filter options (accident types and categories)
 
 **Filtering Options:**
 
-- **Police Station:** Vlasotince (pstation parameter)
-- **Date Range:** startDate and endDate (ISO format: YYYY-MM-DD)
-- **Accident Type:** materijalna, povredjeni, poginuli
-- **Categories:** jedno-vozilo, bez-skretanja, sa-skretanjem, parkirana, pesaci
+*   **Police Station:** Vlasotince (pstation parameter, hardcoded)
+*   **Date Range:** startDate and endDate (ISO format: YYYY-MM-DD)
+    *   Minimum date: 2020-01-01
+    *   Maximum date: Today
+    *   Validation: startDate must be before endDate
+*   **Accident Type:** materijalna, povredjeni, poginuli (dynamically loaded from API)
+*   **Categories:** jedno-vozilo, bez-skretanja, skretanje-prelazak, parkirana, pesaci (dynamically loaded from API)
+    *   Format: Comma-separated values (e.g., `categories=jedno-vozilo,pesaci`)
+
+**Features:**
+
+*   URL state management with `nuqs` - filter values are synced with URL parameters
+*   React Query caching - data is cached and automatically refetched when filters change
+*   Date validation - prevents invalid date ranges and out-of-range dates
+*   Dynamic filter options - accident types and categories are loaded from API
 
 For detailed API documentation, see the [API repository](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API).
 
 ## 🔗 Related Projects
 
-- [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) - Backend API server that provides traffic accident data
+*   [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) - Backend API server that provides traffic accident data
 
 ## 📄 License
 
@@ -206,14 +269,14 @@ This project uses **official open data** from the Republic of Serbia's open data
 
 The data is available in XLSX format and contains comprehensive information about traffic accidents including:
 
-- Unique accident ID
-- Police station and municipality
-- Date and time of the accident
-- Geolocation coordinates (X, Y)
-- Accident type (material damage, injuries, fatalities)
-- Accident category
-- Number of vehicles involved
-- Status of participants (injured, deceased)
-- Detailed accident description
+*   Unique accident ID
+*   Police station and municipality
+*   Date and time of the accident
+*   Geolocation coordinates (X, Y)
+*   Accident type (material damage, injuries, fatalities)
+*   Accident category
+*   Number of vehicles involved
+*   Status of participants (injured, deceased)
+*   Detailed accident description
 
 All data is processed and made available through the [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) backend service.
