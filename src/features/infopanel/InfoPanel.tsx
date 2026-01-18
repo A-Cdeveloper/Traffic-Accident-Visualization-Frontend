@@ -141,7 +141,7 @@ const InfoPanel = () => {
 
 
         {/* Ukupan broj nesreća */}
-        <div className="space-y-2 pt-2 border-t border-border">
+        <div className="space-y-2 py-2 border-y border-border">
           <div className="flex justify-between items-center">
             <span className="font-semibold">Ukupan broj nesreća:</span>
             <span className="font-bold text-md">{accidents?.total || 0}</span>

@@ -27,7 +27,7 @@ const SideBar = () => {
       </Button>
       {isSidebarOpen && (
         <div className="h-full overflow-y-auto flex flex-col py-4 space-y-10">
-          <div className="px-4"><InfoPanel /></div>
+          <div className="px-6"><InfoPanel /></div>
 
           <div className="flex-1 px-4"><FilterForm /></div>
         </div>

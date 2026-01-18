@@ -6,13 +6,18 @@ import { Link } from "react-router";
  */
 const naviItems = [
   {
-    label: "Impressum",
-    to: "/impressum",
+    label: "Mapa",
+    to: "/",
   },
   {
     label: "Kontakt",
     to: "/kontakt",
   },
+  {
+    label: "Impressum",
+    to: "/impressum",
+  },
+
 ];
 
 /**
@@ -26,7 +31,9 @@ const MetaNavigation = () => {
         <Link
           key={item.label}
           to={item.to}
-          className="hover:text-foreground dark:hover:text-white"
+          className="hover:text-foreground dark:hover:text-white uppercase"
+          title={item.label}
+          aria-label={item.label}
         >
           {item.label}
         </Link>
@@ -51,7 +58,7 @@ const Footer = () => {
       <p className="text-[12px] text-muted-foreground dark:text-muted-foreground/60 mb-0">
       {new Date().getFullYear()} © All rights
         reserved |{" "}
-        <Link to="https://e-seo.info" target="_blank">
+        <Link to="https://www.e-seo.info" target="_blank">
           E-SEO TEAM
         </Link>
       </p>

@@ -217,10 +217,10 @@ const FilterForm = () => {
       {/* Dugmad */}
       <div className="flex gap-3 pt-2">
         <Button type="submit" className="flex-1 text-[13px]">
-          Primeni
+          Primeni filtere
         </Button>
         <Button type="reset" variant="outline" className="flex-1 text-[13px]">
-          Reset
+          Poništi
         </Button>
       </div>
     </form>
