@@ -1,10 +1,12 @@
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
-import MapResizeHandler from './MapResizeHandler'
-import AccidentMarker from './AccidentMarker'
-import { VLASOTINCE_CENTER, DEFAULT_ZOOM } from './constants'
-import useAccidents from '../accidents/hooks/useAccidents'
 import Loading from '@/components/Loading'
+import 'leaflet/dist/leaflet.css'
+import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
+
+import useAccidents from '../accidents/hooks/useAccidents'
+import AccidentMarker from './AccidentMarker'
+import { DEFAULT_ZOOM, VLASOTINCE_CENTER } from './constants'
+import MapResizeHandler from './MapResizeHandler'
+import NotFound from '@/pages/NotFound'
 
 const Map = () => {
 
@@ -14,8 +16,10 @@ const Map = () => {
     return <Loading />
   }
 
+  // TODO: Add NotFound component
   if (!accidentsData) {
-    return <div>No accidents found</div>
+    //toast.error('No accidents found')
+    return <NotFound />
   }
 
 
