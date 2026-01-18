@@ -13,6 +13,7 @@ import {
 import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
 import { useFilters } from './hooks/useFilters'
 import { validateDateRange } from '@/utils/dates'
+import { categoryColorMap } from '@/features/map/constants'
 
 const FilterForm = () => {
   const [filters, setFilters] = useQueryStates({
@@ -147,23 +148,30 @@ const FilterForm = () => {
       {/* Kategorije */}
       <fieldset className="space-y-2">
         <div className="space-y-3">
-          {filterOptions?.categories.map((category) => (
-            <div key={category.value} className="flex items-center space-x-2">
-              <Checkbox 
-                id={category.value}
-                name={category.value}
-                checked={localFilters.categories.includes(category.value)}
-                onCheckedChange={(checked) => handleCategoryToggle(category.value, checked === true)}
-                disabled={isLoadingOptions}
-              />
-              <label
-                htmlFor={category.value}
-                className="text-[13px] font-normal cursor-pointer"
-              >
-                {category.label}
-              </label>
-            </div>
-          ))}
+          {filterOptions?.categories.map((category) => {
+            const color = categoryColorMap[category.label] || '#6b7280'
+            return (
+              <div key={category.value} className="flex items-center space-x-2">
+                <Checkbox 
+                  id={category.value}
+                  name={category.value}
+                  checked={localFilters.categories.includes(category.value)}
+                  onCheckedChange={(checked) => handleCategoryToggle(category.value, checked === true)}
+                  disabled={isLoadingOptions}
+                />
+                <div 
+                  className="w-3 h-3 rounded-full shrink-0"
+                  style={{ backgroundColor: color }}
+                />
+                <label
+                  htmlFor={category.value}
+                  className="text-[13px] font-normal cursor-pointer leading-normal"
+                >
+                  {category.label}
+                </label>
+              </div>
+            )
+          })}
         </div>
       </fieldset>
 
