@@ -33,7 +33,7 @@ export type AccidentsErrorResponse = {
 export type AccidentsResponse = AccidentsSuccessResponse | AccidentsErrorResponse;
 
 
-// Parametri koje šaljemo na server za filtriranje
+// Parameters sent to server for filtering
 export type AccidentFilterParams = {
   startDate: string | null;
   endDate: string | null;
@@ -41,19 +41,19 @@ export type AccidentFilterParams = {
   categories: string[] | null;
 };
 
-// Jedna opcija u filteru (value + label)
+// Single filter option (value + label)
 export type FilterOption = {
   value: string;
   label: string;
 };
 
-// Tipovi nesreća koje dobijamo sa servera
+// Accident types received from server
 export type AccidentTypes = FilterOption[];
 
-// Kategorije koje dobijamo sa servera
+// Categories received from server
 export type AccidentCategories = FilterOption[];
 
-// Ceo response sa metadata endpoint-a
+// Complete response from metadata endpoint
 export type MetadataResponse = {
   accidentTypes: AccidentTypes;
   categories: AccidentCategories;

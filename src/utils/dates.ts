@@ -32,12 +32,12 @@ export const validateDateRange = (
   endDate: string | null | undefined,
   requireBoth: boolean = false
 ): DateValidationResult => {
-  // Ako nema oba datuma i nije obavezno, validacija je ok
+  // If both dates are not required and one is missing, validation is ok
   if (!requireBoth && (!startDate || !endDate)) {
     return { isValid: true }
   }
 
-  // Ako je obavezno oba datuma, proveri
+  // If both dates are required, check
   if (requireBoth && (!startDate || !endDate)) {
     return { isValid: false, errorMessage: 'Oba datuma su obavezna' }
   }
@@ -52,17 +52,17 @@ export const validateDateRange = (
     const minDate = parseISO('2020-01-01')
     const maxDate = endOfDay(new Date())
 
-    // Proveri da li su datumi validni
+    // Check if dates are valid
     if (!isValid(start) || !isValid(end)) {
       return { isValid: false, errorMessage: 'Nevažeći format datuma' }
     }
 
-    // Proveri da li je startDate pre endDate
+    // Check if startDate is before endDate
     if (isAfter(start, end)) {
       return { isValid: false, errorMessage: 'Datum početka mora biti pre datuma završetka intervala' }
     }
 
-    // Proveri da li su datumi u validnom opsegu
+    // Check if dates are within valid range
     if (isBefore(start, minDate) || isAfter(start, maxDate) || isBefore(end, minDate) || isAfter(end, maxDate)) {
       return { isValid: false, errorMessage: 'Datumi moraju biti između 01.01.2020 i danas' }
     }
