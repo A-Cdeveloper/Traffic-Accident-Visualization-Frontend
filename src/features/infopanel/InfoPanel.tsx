@@ -2,6 +2,7 @@ import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
 import useAccidents from '@/features/accidents/hooks/useAccidents'
 import { useFilters } from '@/features/filter/hooks/useFilters'
 import { formatDate, validateDateRange } from '@/utils/dates'
+import Loading from '@/components/Loading'
 
 const InfoPanel = () => {
   const [filters] = useQueryStates({
@@ -84,20 +85,7 @@ const InfoPanel = () => {
   }
 
   if (isLoadingAccidents || isLoadingFilters) {
-    return (
-      <div className="text-[13px]">
-        <div className="grid grid-cols-1 gap-4">
-          <div className="text-muted-foreground">Učitavanje...</div>
-          {/* Ukupan broj nesreća - uvek prikazan */}
-          <div className="space-y-2 pt-2 border-t border-border">
-            <div className="flex justify-between items-center">
-              <span className="font-semibold">Ukupan broj nesreća:</span>
-              <span className="font-bold text-md">-</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+    return <Loading className="size-4" />
   }
 
   return (
