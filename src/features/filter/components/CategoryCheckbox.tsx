@@ -27,6 +27,7 @@ const CategoryCheckbox = ({ category, checked, onCheckedChange, disabled }: Cate
       <div
         className="w-3 h-3 rounded-full shrink-0"
         style={{ backgroundColor: color }}
+        aria-hidden="true"
       />
       <label
         htmlFor={category.value}

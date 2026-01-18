@@ -20,6 +20,9 @@ type AccidentTypeSelectProps = {
 const AccidentTypeSelect = ({ value, onValueChange, options, disabled }: AccidentTypeSelectProps) => {
   return (
     <div className="space-y-2">
+      <label htmlFor="accidentType" className="text-[13px] font-medium">
+        Tip nesreće
+      </label>
       <Select
         name="accidentType"
         value={value}

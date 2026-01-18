@@ -155,6 +155,7 @@ const FilterForm = () => {
 
       {/* Categories */}
       <fieldset className="space-y-2">
+        <legend className="sr-only">Kategorije nesreća</legend>
         <div className="space-y-3">
           {filterOptions?.categories.map((category) => (
             <CategoryCheckbox
