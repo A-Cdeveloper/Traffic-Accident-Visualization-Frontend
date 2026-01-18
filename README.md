@@ -13,6 +13,9 @@ This project is a React frontend application that enables users to:
 *   View accident statistics in the info panel (total count, counts by category and type)
 *   Shareable filter URLs - filter state is synced with URL parameters
 *   Visualize accident data from 2020-2025
+*   Automatic initial date filter (2025-01-01 to today) on first load
+*   Colored pin markers on map - each category has its own color
+*   Centralized Loading component for all React Query requests
 *   Access monthly updated data
 
 **Data Coverage:**
@@ -39,6 +42,7 @@ This application is built on top of the [Traffic-Accident-Visualization-API](htt
 *   **nuqs** - URL state management
 *   **sonner** - Toast notifications
 *   **Lucide React** - Icons
+*   **Leaflet & React-Leaflet** - Interactive maps
 *   **Husky** - Git hooks for code quality
 *   **ESLint** - Code linting with jsx-a11y plugin
 
@@ -210,7 +214,10 @@ The project follows WCAG accessibility standards:
 *   ✅ API integration (accidents and metadata endpoints)
 *   ✅ Filter form with date validation
 *   ✅ Info panel with dynamic statistics
-*   ⏳ Map visualization (in progress)
+*   ✅ Map visualization with Leaflet
+*   ✅ Colored pin markers by category
+*   ✅ Loading component for React Query states
+*   ✅ Automatic initial date filter (2025-01-01 to today)
 
 ## 🔌 API Integration
 
@@ -238,6 +245,10 @@ This frontend application connects to the [Traffic-Accident-Visualization-API](h
 *   React Query caching - data is cached and automatically refetched when filters change
 *   Date validation - prevents invalid date ranges and out-of-range dates
 *   Dynamic filter options - accident types and categories are loaded from API
+*   Automatic initial filter - sets filter for 2025 (2025-01-01 to today) on first load
+*   Colored pin markers on map - each category has its own color
+*   Centralized Loading component - used for all React Query loading states
+*   Category color indicators - colored circles next to category checkboxes in filter form
 
 For detailed API documentation, see the [API repository](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API).
 
