@@ -1,9 +1,13 @@
 import { createBrowserRouter } from "react-router";
-import HomePage from "../../pages/HomePage";
-import Impressum from "../../pages/Impressum";
-import Kontakt from "../../pages/Kontakt";
-import NotFound from "../../pages/NotFound";
 import AppLayout from "@/components/layout/AppLayout";
+import { lazy } from "react";
+
+/* Lazy loading pages */
+const HomePage = lazy(() => import("@/pages/HomePage"));
+const Impressum = lazy(() => import("@/pages/Impressum"));
+const Kontakt = lazy(() => import("@/pages/Kontakt"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+
 
 export const router = createBrowserRouter([
   {

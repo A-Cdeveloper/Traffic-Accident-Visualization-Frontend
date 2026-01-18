@@ -4,6 +4,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { Toaster } from "@/components/ui/sonner";
+import { Suspense } from "react";
+import Loading from "../Loading";
 
 const AppLayout = () => {
   const matches = useMatches();
@@ -18,7 +20,9 @@ const AppLayout = () => {
 
         <section className="flex-1 bg-background overflow-y-auto scroll-auto">
           <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
             <Outlet />
+            </Suspense>
           </ErrorBoundary>
         </section>
       </main>
