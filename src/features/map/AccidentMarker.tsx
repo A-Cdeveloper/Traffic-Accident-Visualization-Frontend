@@ -7,6 +7,11 @@ type AccidentMarkerProps = {
   accident: Accident
 }
 
+/**
+ * AccidentMarker component - Renders a single accident marker on the map.
+ * Uses a custom colored pin icon based on the accident category.
+ * Displays a popup with detailed accident information when clicked.
+ */
 const AccidentMarker = ({ accident }: AccidentMarkerProps) => {
   return (
     <Marker 

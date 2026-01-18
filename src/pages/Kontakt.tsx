@@ -1,10 +1,13 @@
 import { Link } from "react-router";
 
-  const Kontakt = () => {
+/**
+ * Kontakt page component displaying contact information and business details.
+ * Shows phone, email, business registration data, and links to Impressum page.
+ */
+const Kontakt = () => {
   return (
     <div className="container mx-auto p-8 max-w-xl">
-
-      
+      <h1 className="text-3xl font-bold mb-6">Kontakt</h1>
       <div className="space-y-6 text-sm leading-relaxed">
         <section>
           <h2 className="text-xl font-semibold mb-2">Kontakt informacije</h2>

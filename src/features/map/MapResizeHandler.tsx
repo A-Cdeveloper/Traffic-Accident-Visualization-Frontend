@@ -1,6 +1,11 @@
 import { useEffect } from 'react'
 import { useMap } from 'react-leaflet'
 
+/**
+ * MapResizeHandler component - Handles map resizing when container dimensions change.
+ * Uses ResizeObserver to detect container size changes and invalidates the map size
+ * to ensure proper rendering when sidebar opens/closes or window is resized.
+ */
 const MapResizeHandler = () => {
   const map = useMap()
 

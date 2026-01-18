@@ -1,8 +1,12 @@
+/**
+ * Impressum page component displaying legal information about the application.
+ * Includes data source information, responsibility disclaimers, technical details,
+ * copyright information, and contact details.
+ */
 const Impressum = () => {
   return (
     <div className="container mx-auto p-8 max-w-4xl">
-
-      
+      <h1 className="text-3xl font-bold mb-6">Impressum</h1>
       <div className="space-y-6 text-sm leading-relaxed">
 
 

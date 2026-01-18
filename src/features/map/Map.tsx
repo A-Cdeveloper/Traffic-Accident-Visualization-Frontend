@@ -8,6 +8,11 @@ import { DEFAULT_ZOOM, VLASOTINCE_CENTER } from './constants'
 import MapResizeHandler from './MapResizeHandler'
 import NoAccidentsFound from '../accidents/NoAccidentsFound'
 
+/**
+ * Map component - Main interactive map displaying traffic accidents.
+ * Renders a Leaflet map with OpenStreetMap tiles, zoom controls, and accident markers.
+ * Shows loading state while fetching data and empty state when no accidents are found.
+ */
 const Map = () => {
 
   const { data: accidentsData, isLoading: isLoadingAccidents } = useAccidents()
@@ -39,7 +44,7 @@ const Map = () => {
       <ZoomControl position="topright" />
       <MapResizeHandler />
       
-      {/* Prikazi marker za svaku nesreću */}
+
       {accidentsData.data.map((accident) => (
         <AccidentMarker key={accident.id} accident={accident} />
       ))}

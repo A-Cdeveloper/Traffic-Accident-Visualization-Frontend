@@ -1,8 +1,16 @@
 import L from 'leaflet'
 import { categoryColorMap } from '../constants'
 
+/**
+ * Creates a custom Leaflet marker icon based on accident category.
+ * Returns a colored pin icon (SVG) with category-specific color.
+ * Falls back to gray color if category is not found in the color map.
+ *
+ * @param category - Accident category label (e.g., "Jedno vozilo", "Pešaci")
+ * @returns Leaflet DivIcon with custom SVG pin marker
+ */
 export const getMarkerIcon = (category: string): L.DivIcon => {
-  const color = categoryColorMap[category] || '#6b7280' // siva kao default
+  const color = categoryColorMap[category] || '#6b7280' // gray as default
 
   return L.divIcon({
     className: 'custom-marker',
