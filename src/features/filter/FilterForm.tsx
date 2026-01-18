@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -29,12 +29,51 @@ const FilterForm = () => {
   const minDate = '2020-01-01'
   const maxDate = new Date().toISOString().split('T')[0] // Danas u formatu YYYY-MM-DD
 
-  // Lokalno stanje forme - menja se samo u formi, ne primenjuje se dok se ne klikne "Primeni"
-  const [localFilters, setLocalFilters] = useState({
-    startDate: filters.startDate || '',
-    endDate: filters.endDate || '',
-    accidentType: filters.accidentType || 'all',
-    categories: filters.categories || [] as string[],
+  // Initial filter: 01.01.2025 do danas
+  const initialStartDate = '2025-01-01'
+  const initialEndDate = maxDate
+
+  // Track da li je initial filter već postavljen
+  const hasInitialized = useRef(false)
+
+  // Automatski postavi initial filter ako nema filtera u URL-u
+  useEffect(() => {
+    if (hasInitialized.current) return
+    
+    const hasNoFilters = !filters.startDate && !filters.endDate && !filters.accidentType && (!filters.categories || filters.categories.length === 0)
+    
+    if (hasNoFilters) {
+      hasInitialized.current = true
+      setFilters({
+        startDate: initialStartDate,
+        endDate: initialEndDate,
+        accidentType: null,
+        categories: null,
+      })
+    } else {
+      hasInitialized.current = true
+    }
+  }, [filters.startDate, filters.endDate, filters.accidentType, filters.categories, initialEndDate, setFilters])
+
+
+  // Koristi filtere iz URL-a ako postoje, inače koristi initial vrednosti
+  const [localFilters, setLocalFilters] = useState(() => {
+    // Ako ima filtere u URL-u, koristi ih
+    if (filters.startDate || filters.endDate || filters.accidentType || (filters.categories && filters.categories.length > 0)) {
+      return {
+        startDate: filters.startDate || '',
+        endDate: filters.endDate || '',
+        accidentType: filters.accidentType || 'all',
+        categories: filters.categories || [] as string[],
+      }
+    }
+    // Inače koristi initial vrednosti
+    return {
+      startDate: initialStartDate,
+      endDate: initialEndDate,
+      accidentType: 'all',
+      categories: [] as string[],
+    }
   })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,20 +96,20 @@ const FilterForm = () => {
   }
 
   const handleReset = () => {
-    // Resetujemo lokalno stanje
-    setLocalFilters({
-      startDate: '',
-      endDate: '',
-      accidentType: 'all',
-      categories: [],
-    })
-    
-    // Resetujemo i URL filtere
+    // Resetujemo URL filtere
     setFilters({
       startDate: null,
       endDate: null,
       accidentType: null,
       categories: null,
+    })
+    
+    // Resetujemo lokalno stanje na initial vrednosti
+    setLocalFilters({
+      startDate: initialStartDate,
+      endDate: initialEndDate,
+      accidentType: 'all',
+      categories: [],
     })
   }
 
