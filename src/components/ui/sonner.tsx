@@ -28,8 +28,14 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-text": "var(--popover-foreground)",
           "--normal-border": "var(--border)",
           "--border-radius": "var(--radius)",
+          "--error-border": "hsl(var(--destructive))",
         } as React.CSSProperties
       }
+      toastOptions={{
+        classNames: {
+          error: "border-2! border-destructive! bg-destructive/40!",
+        },
+      }}
       {...props}
     />
   )

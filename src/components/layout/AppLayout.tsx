@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import Header from "./Header";
 import Footer from "./Footer";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { Toaster } from "@/components/ui/sonner";
 
 const AppLayout = () => {
   return (
@@ -20,6 +21,7 @@ const AppLayout = () => {
       </main>
 
       <Footer />
+      <Toaster />
     </div>
   );
 };
