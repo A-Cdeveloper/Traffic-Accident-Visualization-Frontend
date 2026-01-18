@@ -6,9 +6,9 @@ export const DEFAULT_ZOOM = 14
 
 // Mapiranje labela kategorija na boje (backend vraća label u accident.category)
 export const categoryColorMap: Record<string, string> = {
-  'Jedno vozilo': '#3b82f6', // plava
-  'Najmanje dva vozila – bez skretanja': '#ef4444', // crvena
-  'Najmanje dva vozila – skretanje ili prelazak': '#f97316', // narandžasta
-  'Parkirana vozila': '#a855f7', // ljubičasta
-  'Pešaci': '#22c55e', // zelena
+  'Jedno vozilo': '#1960D1', // plava
+  'Najmanje dva vozila – bez skretanja': '#E22121', // crvena
+  'Najmanje dva vozila – skretanje ili prelazak': '#DFE21F', // narandžasta
+  'Parkirana vozila': '#8F48D1', // ljubičasta
+  'Pešaci': '#0B8F3B', // zelena
 }
