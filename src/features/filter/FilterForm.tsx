@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -9,6 +11,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
+import { useFilters } from './hooks/useFilters'
+import { validateDateRange } from '@/utils/dates'
 
 const FilterForm = () => {
   const [filters, setFilters] = useQueryStates({
@@ -18,34 +22,64 @@ const FilterForm = () => {
     categories: parseAsArrayOf(parseAsString),
   })
 
+  const { data: filterOptions, isLoading: isLoadingOptions } = useFilters()
+
+  // Ograničenja za datume
+  const minDate = '2020-01-01'
+  const maxDate = new Date().toISOString().split('T')[0] // Danas u formatu YYYY-MM-DD
+
+  // Lokalno stanje forme - menja se samo u formi, ne primenjuje se dok se ne klikne "Primeni"
+  const [localFilters, setLocalFilters] = useState({
+    startDate: filters.startDate || '',
+    endDate: filters.endDate || '',
+    accidentType: filters.accidentType || 'all',
+    categories: filters.categories || [] as string[],
+  })
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
     
-    const startDate = formData.get('startDate') as string
-    const endDate = formData.get('endDate') as string
-    const accidentType = formData.get('accidentType') as string
-    const categories: string[] = []
+    // Validacija datuma
+    const dateValidation = validateDateRange(localFilters.startDate, localFilters.endDate, true)
+    if (!dateValidation.isValid) {
+      toast.error(dateValidation.errorMessage)
+      return
+    }
     
-    if (formData.get('type1') === 'on') categories.push('type1')
-    if (formData.get('type2') === 'on') categories.push('type2')
-    if (formData.get('type3') === 'on') categories.push('type3')
-
+    // Primenjujemo filtere tek na submit
     setFilters({
-      startDate: startDate || null,
-      endDate: endDate || null,
-      accidentType: accidentType && accidentType !== 'all' ? accidentType : null,
-      categories: categories.length > 0 ? categories : null,
+      startDate: localFilters.startDate || null,
+      endDate: localFilters.endDate || null,
+      accidentType: localFilters.accidentType && localFilters.accidentType !== 'all' ? localFilters.accidentType : null,
+      categories: localFilters.categories.length > 0 ? localFilters.categories : null,
     })
   }
 
   const handleReset = () => {
+    // Resetujemo lokalno stanje
+    setLocalFilters({
+      startDate: '',
+      endDate: '',
+      accidentType: 'all',
+      categories: [],
+    })
+    
+    // Resetujemo i URL filtere
     setFilters({
       startDate: null,
       endDate: null,
       accidentType: null,
       categories: null,
     })
+  }
+
+  const handleCategoryToggle = (categoryValue: string, checked: boolean) => {
+    setLocalFilters(prev => ({
+      ...prev,
+      categories: checked
+        ? [...prev.categories, categoryValue]
+        : prev.categories.filter(cat => cat !== categoryValue)
+    }))
   }
 
   return (
@@ -64,7 +98,10 @@ const FilterForm = () => {
             id="date-from"
             name="startDate"
             type="date"
-            defaultValue={filters.startDate || ''}
+            value={localFilters.startDate}
+            onChange={(e) => setLocalFilters(prev => ({ ...prev, startDate: e.target.value }))}
+            min={minDate}
+            max={maxDate}
             className="w-full text-[13px] mt-1 pr-0 pl-1"
           />
         </div>
@@ -76,96 +113,57 @@ const FilterForm = () => {
             id="date-to"
             name="endDate"
             type="date"
-            defaultValue={filters.endDate || ''}
+            value={localFilters.endDate}
+            onChange={(e) => setLocalFilters(prev => ({ ...prev, endDate: e.target.value }))}
+            min={minDate}
+            max={maxDate}
             className="w-full text-[13px] mt-1 pr-1 pl-1"
           />
         </div>
       </div>
 
-      {/* Kategorija */}
+      {/* Tip nesreće */}
       <div className="space-y-2">
         <Select
           name="accidentType"
-          value={filters.accidentType || 'all'}
-          onValueChange={(value) => 
-            setFilters({ accidentType: value === 'all' ? null : value })
-          }
+          value={localFilters.accidentType}
+          onValueChange={(value) => setLocalFilters(prev => ({ ...prev, accidentType: value }))}
+          disabled={isLoadingOptions}
         >
-          <SelectTrigger id="category" className="w-full text-[13px]">
-            <SelectValue placeholder="Izaberi kategoriju" />
+          <SelectTrigger id="accidentType" className="w-full text-[13px]">
+            <SelectValue placeholder="Izaberi tip nesreće" />
           </SelectTrigger>
           <SelectContent className="text-[13px]">
-            <SelectItem value="all">Sve kategorije</SelectItem>
-            <SelectItem value="category1">Kategorija 1</SelectItem>
-            <SelectItem value="category2">Kategorija 2</SelectItem>
-            <SelectItem value="category3">Kategorija 3</SelectItem>
+            <SelectItem value="all">Svi tipovi</SelectItem>
+            {filterOptions?.accidentTypes.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
 
-      {/* Tip - tri checkboxa */}
+      {/* Kategorije */}
       <fieldset className="space-y-2">
         <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <Checkbox 
-              id="type1" 
-              name="type1"
-              checked={filters.categories?.includes('type1') || false}
-              onCheckedChange={(checked) => {
-                const currentCategories = filters.categories || []
-                const newCategories = checked
-                  ? [...currentCategories, 'type1']
-                  : currentCategories.filter(cat => cat !== 'type1')
-                setFilters({ categories: newCategories.length > 0 ? newCategories : null })
-              }}
-            />
-            <label
-              htmlFor="type1"
-              className="text-[13px] font-normal cursor-pointer"
-            >
-              Tip 1
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox 
-              id="type2" 
-              name="type2"
-              checked={filters.categories?.includes('type2') || false}
-              onCheckedChange={(checked) => {
-                const currentCategories = filters.categories || []
-                const newCategories = checked
-                  ? [...currentCategories, 'type2']
-                  : currentCategories.filter(cat => cat !== 'type2')
-                setFilters({ categories: newCategories.length > 0 ? newCategories : null })
-              }}
-            />
-            <label
-              htmlFor="type2"
-              className="text-[13px] font-normal cursor-pointer"
-            >
-              Tip 2
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox 
-              id="type3" 
-              name="type3"
-              checked={filters.categories?.includes('type3') || false}
-              onCheckedChange={(checked) => {
-                const currentCategories = filters.categories || []
-                const newCategories = checked
-                  ? [...currentCategories, 'type3']
-                  : currentCategories.filter(cat => cat !== 'type3')
-                setFilters({ categories: newCategories.length > 0 ? newCategories : null })
-              }}
-            />
-            <label
-              htmlFor="type3"
-              className="text-[13px] font-normal cursor-pointer"
-            >
-              Tip 3
-            </label>
-          </div>
+          {filterOptions?.categories.map((category) => (
+            <div key={category.value} className="flex items-center space-x-2">
+              <Checkbox 
+                id={category.value}
+                name={category.value}
+                checked={localFilters.categories.includes(category.value)}
+                onCheckedChange={(checked) => handleCategoryToggle(category.value, checked === true)}
+                disabled={isLoadingOptions}
+              />
+              <label
+                htmlFor={category.value}
+                className="text-[13px] font-normal cursor-pointer"
+              >
+                {category.label}
+              </label>
+            </div>
+          ))}
         </div>
       </fieldset>
 
