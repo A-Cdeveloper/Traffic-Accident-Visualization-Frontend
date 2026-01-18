@@ -1,19 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
 import { useFilters } from './hooks/useFilters'
 import { validateDateRange } from '@/utils/dates'
-import { categoryColorMap } from '@/features/map/constants'
+import DateInput from './components/DateInput'
+import CategoryCheckbox from './components/CategoryCheckbox'
+import AccidentTypeSelect from './components/AccidentTypeSelect'
 
 const FilterForm = () => {
   const [filters, setFilters] = useQueryStates({
@@ -25,18 +18,18 @@ const FilterForm = () => {
 
   const { data: filterOptions, isLoading: isLoadingOptions } = useFilters()
 
-  // Ograničenja za datume
+  // Date constraints
   const minDate = '2020-01-01'
-  const maxDate = new Date().toISOString().split('T')[0] // Danas u formatu YYYY-MM-DD
+  const maxDate = new Date().toISOString().split('T')[0] // Today in YYYY-MM-DD format
 
-  // Initial filter: 01.01.2025 do danas
+  // Initial filter: 01.01.2025 to today
   const initialStartDate = '2025-01-01'
   const initialEndDate = maxDate
 
-  // Track da li je initial filter već postavljen
+  // Track if initial filter has been set
   const hasInitialized = useRef(false)
 
-  // Automatski postavi initial filter ako nema filtera u URL-u
+  // Automatically set initial filter if no filters in URL
   useEffect(() => {
     if (hasInitialized.current) return
     
@@ -56,9 +49,9 @@ const FilterForm = () => {
   }, [filters.startDate, filters.endDate, filters.accidentType, filters.categories, initialEndDate, setFilters])
 
 
-  // Koristi filtere iz URL-a ako postoje, inače koristi initial vrednosti
+  // Use filters from URL if they exist, otherwise use initial values
   const [localFilters, setLocalFilters] = useState(() => {
-    // Ako ima filtere u URL-u, koristi ih
+    // If filters exist in URL, use them
     if (filters.startDate || filters.endDate || filters.accidentType || (filters.categories && filters.categories.length > 0)) {
       return {
         startDate: filters.startDate || '',
@@ -67,7 +60,7 @@ const FilterForm = () => {
         categories: filters.categories || [] as string[],
       }
     }
-    // Inače koristi initial vrednosti
+    // Otherwise use initial values
     return {
       startDate: initialStartDate,
       endDate: initialEndDate,
@@ -79,14 +72,14 @@ const FilterForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
-    // Validacija datuma
+    // Validate dates
     const dateValidation = validateDateRange(localFilters.startDate, localFilters.endDate, true)
     if (!dateValidation.isValid) {
       toast.error(dateValidation.errorMessage)
       return
     }
     
-    // Primenjujemo filtere tek na submit
+    // Apply filters only on submit
     setFilters({
       startDate: localFilters.startDate || null,
       endDate: localFilters.endDate || null,
@@ -96,7 +89,7 @@ const FilterForm = () => {
   }
 
   const handleReset = () => {
-    // Resetujemo URL filtere
+    // Reset URL filters
     setFilters({
       startDate: null,
       endDate: null,
@@ -104,7 +97,7 @@ const FilterForm = () => {
       categories: null,
     })
     
-    // Resetujemo lokalno stanje na initial vrednosti
+    // Reset local state to initial values
     setLocalFilters({
       startDate: initialStartDate,
       endDate: initialEndDate,
@@ -128,93 +121,54 @@ const FilterForm = () => {
       onReset={handleReset}
       className="space-y-5 text-[13px] bg-muted p-4 rounded-md"
     >
-      {/* Datum od i do */}
+      {/* Date from and to */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div className="space-y-2">
-          <label htmlFor="date-from" className="text-[13px] font-medium">
-            Datum od
-          </label>
-          <Input
-            id="date-from"
-            name="startDate"
-            type="date"
-            value={localFilters.startDate}
-            onChange={(e) => setLocalFilters(prev => ({ ...prev, startDate: e.target.value }))}
-            min={minDate}
-            max={maxDate}
-            className="w-full text-[13px] mt-1 pr-0 pl-1"
-          />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="date-to" className="text-[13px] font-medium">
-            Datum do
-          </label>
-          <Input
-            id="date-to"
-            name="endDate"
-            type="date"
-            value={localFilters.endDate}
-            onChange={(e) => setLocalFilters(prev => ({ ...prev, endDate: e.target.value }))}
-            min={minDate}
-            max={maxDate}
-            className="w-full text-[13px] mt-1 pr-1 pl-1"
-          />
-        </div>
+        <DateInput
+          id="date-from"
+          name="startDate"
+          label="Datum od"
+          value={localFilters.startDate}
+          onChange={(value) => setLocalFilters(prev => ({ ...prev, startDate: value }))}
+          min={minDate}
+          max={maxDate}
+          className="pr-0 pl-1"
+        />
+        <DateInput
+          id="date-to"
+          name="endDate"
+          label="Datum do"
+          value={localFilters.endDate}
+          onChange={(value) => setLocalFilters(prev => ({ ...prev, endDate: value }))}
+          min={minDate}
+          max={maxDate}
+          className="pr-1 pl-1"
+        />
       </div>
 
-      {/* Tip nesreće */}
-      <div className="space-y-2">
-        <Select
-          name="accidentType"
-          value={localFilters.accidentType}
-          onValueChange={(value) => setLocalFilters(prev => ({ ...prev, accidentType: value }))}
-          disabled={isLoadingOptions}
-        >
-          <SelectTrigger id="accidentType" className="w-full text-[13px]">
-            <SelectValue placeholder="Izaberi tip nesreće" />
-          </SelectTrigger>
-          <SelectContent className="text-[13px]">
-            <SelectItem value="all">Svi tipovi</SelectItem>
-            {filterOptions?.accidentTypes.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      {/* Accident type */}
+      <AccidentTypeSelect
+        value={localFilters.accidentType}
+        onValueChange={(value) => setLocalFilters(prev => ({ ...prev, accidentType: value }))}
+        options={filterOptions?.accidentTypes}
+        disabled={isLoadingOptions}
+      />
 
-      {/* Kategorije */}
+      {/* Categories */}
       <fieldset className="space-y-2">
         <div className="space-y-3">
-          {filterOptions?.categories.map((category) => {
-            const color = categoryColorMap[category.label] || '#6b7280'
-            return (
-              <div key={category.value} className="flex items-center space-x-2">
-                <Checkbox 
-                  id={category.value}
-                  name={category.value}
-                  checked={localFilters.categories.includes(category.value)}
-                  onCheckedChange={(checked) => handleCategoryToggle(category.value, checked === true)}
-                  disabled={isLoadingOptions}
-                />
-                <div 
-                  className="w-3 h-3 rounded-full shrink-0"
-                  style={{ backgroundColor: color }}
-                />
-                <label
-                  htmlFor={category.value}
-                  className="text-[13px] font-normal cursor-pointer leading-normal"
-                >
-                  {category.label}
-                </label>
-              </div>
-            )
-          })}
+          {filterOptions?.categories.map((category) => (
+            <CategoryCheckbox
+              key={category.value}
+              category={category}
+              checked={localFilters.categories.includes(category.value)}
+              onCheckedChange={(checked) => handleCategoryToggle(category.value, checked)}
+              disabled={isLoadingOptions}
+            />
+          ))}
         </div>
       </fieldset>
 
-      {/* Dugmad */}
+      {/* Buttons */}
       <div className="flex gap-3 pt-2">
         <Button type="submit" className="flex-1 text-[13px]">
           Primeni filtere
