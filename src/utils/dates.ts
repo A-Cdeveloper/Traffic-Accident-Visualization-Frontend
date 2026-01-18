@@ -1,10 +1,24 @@
+import { format, isValid, parseISO, isBefore, isAfter, endOfDay } from 'date-fns'
+import { sr } from 'date-fns/locale'
+
 export const formatDate = (dateString: string | null | undefined): string => {
   if (!dateString) return '-'
   try {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('sr-RS', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    const date = parseISO(dateString)
+    if (!isValid(date)) return '-'
+    return format(date, 'dd.MM.yyyy', { locale: sr })
   } catch {
     return '-'
+  }
+}
+
+export const formatDateTime = (dateString: string): string => {
+  try {
+    const date = parseISO(dateString)
+    if (!isValid(date)) return dateString
+    return format(date, 'dd.MM.yyyy. HH:mm', { locale: sr }) + 'h'
+  } catch {
+    return dateString
   }
 }
 
@@ -32,21 +46,29 @@ export const validateDateRange = (
     return { isValid: true }
   }
 
-  const start = new Date(startDate)
-  const end = new Date(endDate)
-  const minDate = new Date('2020-01-01')
-  const maxDate = new Date()
-  maxDate.setHours(23, 59, 59, 999) // Kraj dana
+  try {
+    const start = parseISO(startDate)
+    const end = parseISO(endDate)
+    const minDate = parseISO('2020-01-01')
+    const maxDate = endOfDay(new Date())
 
-  // Proveri da li je startDate pre endDate
-  if (start > end) {
-    return { isValid: false, errorMessage: 'Datum "od" mora biti pre datuma "do"' }
+    // Proveri da li su datumi validni
+    if (!isValid(start) || !isValid(end)) {
+      return { isValid: false, errorMessage: 'Nevažeći format datuma' }
+    }
+
+    // Proveri da li je startDate pre endDate
+    if (isAfter(start, end)) {
+      return { isValid: false, errorMessage: 'Datum početka mora biti pre datuma završetka intervala' }
+    }
+
+    // Proveri da li su datumi u validnom opsegu
+    if (isBefore(start, minDate) || isAfter(start, maxDate) || isBefore(end, minDate) || isAfter(end, maxDate)) {
+      return { isValid: false, errorMessage: 'Datumi moraju biti između 01.01.2020 i danas' }
+    }
+
+    return { isValid: true }
+  } catch {
+    return { isValid: false, errorMessage: 'Greška pri validaciji datuma' }
   }
-
-  // Proveri da li su datumi u validnom opsegu
-  if (start < minDate || start > maxDate || end < minDate || end > maxDate) {
-    return { isValid: false, errorMessage: 'Datumi moraju biti između 01.01.2020 i danas' }
-  }
-
-  return { isValid: true }
 }
