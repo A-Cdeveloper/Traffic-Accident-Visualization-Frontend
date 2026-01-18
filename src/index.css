@@ -230,3 +230,22 @@ html * {
 .dark *::-webkit-scrollbar-thumb:hover {
   background-color: hsl(var(--muted-foreground) / 0.6);
 }
+
+.leaflet-popup-content {
+  margin: 0 !important;
+}
+
+/* Leaflet popup background color - koristi CSS varijablu postavljenu inline */
+.leaflet-popup-content-wrapper {
+  background-color: var(--popup-bg-color, var(--card)) !important;
+}
+
+.leaflet-popup-tip {
+  background-color: var(--popup-bg-color, var(--card)) !important;
+}
+
+.leaflet-popup-close-button{
+  right: 5px !important;
+  top: 5px !important;
+
+}
