@@ -6,7 +6,7 @@ import useAccidents from '../accidents/hooks/useAccidents'
 import AccidentMarker from './AccidentMarker'
 import { DEFAULT_ZOOM, VLASOTINCE_CENTER } from './constants'
 import MapResizeHandler from './MapResizeHandler'
-import NotFound from '@/pages/NotFound'
+import NoAccidentsFound from '../accidents/NoAccidentsFound'
 
 const Map = () => {
 
@@ -16,10 +16,10 @@ const Map = () => {
     return <Loading />
   }
 
-  // TODO: Add NotFound component
+
   if (!accidentsData) {
     //toast.error('No accidents found')
-    return <NotFound />
+    return <NoAccidentsFound />
   }
 
 
