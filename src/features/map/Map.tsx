@@ -3,9 +3,9 @@ import 'leaflet/dist/leaflet.css'
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 
 import useAccidents from '../accidents/hooks/useAccidents'
-import AccidentMarker from './AccidentMarker'
+import AccidentMarker from './components/AccidentMarker'
 import { DEFAULT_ZOOM, VLASOTINCE_CENTER } from './constants'
-import MapResizeHandler from './MapResizeHandler'
+import MapResizeHandler from './components/MapResizeHandler'
 import NoAccidentsFound from '../accidents/NoAccidentsFound'
 
 /**

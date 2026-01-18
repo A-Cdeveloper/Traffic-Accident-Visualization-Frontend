@@ -1,6 +1,6 @@
 import { Marker, Popup } from 'react-leaflet'
 import type { Accident } from '@/types/accedents'
-import { getMarkerIcon } from './utils/getMarkerIcon'
+import { getMarkerIcon } from '../utils/getMarkerIcon'
 import AccidentPopup from './AccidentPopup'
 
 type AccidentMarkerProps = {
