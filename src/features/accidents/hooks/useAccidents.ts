@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query'
 import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
-import { getAccidents } from '../api/accedents'
+import { getAccidents } from '../api/getAccidents'
 import type { AccidentsSuccessResponse } from '@/types/accedents'
 
 const useAccidents = (): UseQueryResult<AccidentsSuccessResponse, Error> => {
