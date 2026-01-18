@@ -2,7 +2,7 @@
 
 Frontend application for visualizing traffic accident data for Vlasotince municipality. The application displays traffic accidents on an interactive map and provides filtering capabilities by accident type, category, and time interval.
 
-## 📋 Description
+## Description
 
 This project is a React frontend application that enables users to:
 
@@ -30,7 +30,7 @@ This application uses official open data from the Republic of Serbia's open data
 **Backend API:**  
 This application is built on top of the [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) which provides the data endpoints and filtering capabilities.
 
-## 🚀 Tech Stack
+## Tech Stack
 
 *   **React 19** - UI library
 *   **TypeScript** - Type safety
@@ -46,7 +46,7 @@ This application is built on top of the [Traffic-Accident-Visualization-API](htt
 *   **Husky** - Git hooks for code quality
 *   **ESLint** - Code linting with jsx-a11y plugin
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -82,7 +82,7 @@ npm run dev
 
 The application will be available at `http://localhost:5173` (or the port Vite assigns).
 
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -96,7 +96,7 @@ VITE_API_URL=http://localhost:3000
 VITE_PORT=5173
 ```
 
-## 📜 Available Commands
+## Available Commands
 
 ```
 # Development server
@@ -115,42 +115,58 @@ npm run lint
 npm run type-check
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 frontend/
-├── public/                    # Static files
+├── public/                    # Static files (favicons, etc.)
 ├── src/
-│   ├── assets/               # Images, fonts, etc.
 │   ├── components/           # React components
-│   │   ├── common/          # Shared components
-│   │   ├── layout/         # Layout components (Header, SideBar, Footer)
-│   │   └── ui/             # shadcn/ui components
-│   ├── features/           # Feature-based modules
-│   │   ├── accidents/      # Accident data feature
-│   │   │   ├── api/       # API functions
-│   │   │   └── hooks/     # React Query hooks
-│   │   ├── filter/        # Filter feature
-│   │   │   ├── api/       # Filter API functions
-│   │   │   └── hooks/     # Filter hooks
-│   │   └── infopanel/     # Info panel feature
-│   ├── hooks/              # Custom React hooks
-│   ├── lib/                # Utility functions and configurations
-│   ├── pages/              # Page components
-│   ├── providers/          # React context providers
-│   ├── types/              # TypeScript type definitions
-│   ├── utils/              # Utility functions (dates, etc.)
-│   ├── main.tsx           # Entry point
-│   └── index.css          # Global styles
-├── .env                    # Environment variables (create)
-├── .husky/                # Git hooks
-├── components.json        # shadcn/ui configuration
-├── package.json           # Dependencies
-├── tsconfig.json          # TypeScript configuration
-└── vite.config.ts         # Vite configuration
+│   │   ├── layout/          # Layout components (Header, SideBar, Footer, AppLayout, ThemeSwitch)
+│   │   ├── ui/              # shadcn/ui components (button, select, checkbox, etc.)
+│   │   ├── ErrorBoundary.tsx # Error boundary component
+│   │   └── Loading.tsx       # Loading component
+│   ├── features/            # Feature-based modules
+│   │   ├── accidents/        # Accident data feature
+│   │   │   ├── api/         # API functions (getAccidents.ts)
+│   │   │   ├── hooks/       # React Query hooks (useAccidents.ts)
+│   │   │   └── NoAccidentsFound.tsx
+│   │   ├── filter/          # Filter feature
+│   │   │   ├── api/         # API functions (getFilters.ts)
+│   │   │   ├── components/  # Filter components (DateInput, CategoryCheckbox, AccidentTypeSelect)
+│   │   │   ├── hooks/       # React Query hooks (useFilters.ts)
+│   │   │   └── FilterForm.tsx
+│   │   ├── infopanel/       # Info panel feature
+│   │   │   ├── components/  # Info panel components (DateRangeSection, StatisticSection)
+│   │   │   ├── utils/       # Utility functions (calculateAccidentStats.ts)
+│   │   │   └── InfoPanel.tsx
+│   │   └── map/             # Map feature
+│   │       ├── components/  # Map components (Map, AccidentMarker, AccidentPopup, MapResizeHandler)
+│   │       ├── utils/       # Utility functions (getMarkerIcon.ts)
+│   │       ├── constants.ts # Map constants (center, zoom, colors)
+│   │       └── MapWithSuspense.tsx
+│   ├── hooks/               # Custom React hooks (useTheme.ts)
+│   ├── lib/                 # Utility functions and configurations
+│   │   ├── env.ts           # Environment variable validation
+│   │   └── utils.ts         # Utility functions (cn, etc.)
+│   ├── pages/               # Page components (HomePage, Impressum, Kontakt, NotFound, ErrorPage)
+│   ├── providers/           # React context providers
+│   │   ├── router/          # Router provider (AppRouterProvider, router config)
+│   │   ├── tanstackquery/   # React Query provider (TanstackProvider)
+│   │   └── index.tsx        # Main providers wrapper
+│   ├── types/               # TypeScript type definitions (accedents.ts)
+│   ├── utils/               # Utility functions (dates.ts)
+│   ├── main.tsx             # Entry point
+│   └── index.css            # Global styles
+├── .env                     # Environment variables (create)
+├── .husky/                  # Git hooks
+├── components.json          # shadcn/ui configuration
+├── package.json             # Dependencies
+├── tsconfig.json            # TypeScript configuration
+└── vite.config.ts           # Vite configuration
 ```
 
-## 🎨 UI Components
+## UI Components
 
 The project uses [shadcn/ui](https://ui.shadcn.com/) components with "new-york" style. Components can be added using:
 
@@ -158,7 +174,7 @@ The project uses [shadcn/ui](https://ui.shadcn.com/) components with "new-york" 
 npx shadcn@latest add [component-name]
 ```
 
-## 🛠️ Development
+## Development
 
 ### React Compiler
 
@@ -200,7 +216,28 @@ The project follows WCAG accessibility standards:
 *   Keyboard navigation support
 *   Screen reader compatibility
 
-## 📝 Status
+### Performance Optimization
+
+The application is optimized for fast loading and efficient resource usage:
+
+**Bundle Optimization:**
+*   **Lazy Loading** - All routes (HomePage, Impressum, Kontakt, NotFound) are lazy loaded
+*   **Code Splitting** - Vendor code is separated into chunks for better caching:
+    *   `react-vendor` - React core libraries (97.90 KB)
+    *   `leaflet-vendor` - Leaflet libraries (154.45 KB, lazy loaded)
+    *   `ui-vendor` - Radix UI components (82.24 KB)
+    *   `query-vendor` - React Query (33.22 KB)
+    *   `utils-vendor` - Utility libraries (97.26 KB)
+*   **Leaflet Lazy Loading** - Map component and Leaflet libraries load only when needed
+*   **Initial Bundle Size** - 189 KB gzipped (down from 223 KB, ~15% reduction)
+
+**Benefits:**
+*   Faster initial page load - only essential code is loaded upfront
+*   Better browser caching - vendor chunks are cached separately
+*   Parallel chunk loading - browser loads multiple chunks simultaneously
+*   Reduced bandwidth - users only download what they need
+
+## Status
 
 *   ✅ Project setup (React + Vite + TypeScript)
 *   ✅ Tailwind CSS v4 configuration
@@ -218,55 +255,27 @@ The project follows WCAG accessibility standards:
 *   ✅ Colored pin markers by category
 *   ✅ Loading component for React Query states
 *   ✅ Automatic initial date filter (2025-01-01 to today)
+*   ✅ Bundle optimization with lazy loading and code splitting
+*   ✅ Environment variable validation
 
-## 🔌 API Integration
+## API Integration
 
 This frontend application connects to the [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) backend service.
-
-**API Endpoints:**
-
-*   `GET /api/accidents` - Retrieves traffic accident data filtered by police station (pstation), date range, accident type, and categories
-*   `GET /api/metadata` - Retrieves available filter options (accident types and categories)
-
-**Filtering Options:**
-
-*   **Police Station:** Vlasotince (pstation parameter, hardcoded)
-*   **Date Range:** startDate and endDate (ISO format: YYYY-MM-DD)
-    *   Minimum date: 2020-01-01
-    *   Maximum date: Today
-    *   Validation: startDate must be before endDate
-*   **Accident Type:** materijalna, povredjeni, poginuli (dynamically loaded from API)
-*   **Categories:** jedno-vozilo, bez-skretanja, skretanje-prelazak, parkirana, pesaci (dynamically loaded from API)
-    *   Format: Comma-separated values (e.g., `categories=jedno-vozilo,pesaci`)
-
-**Features:**
-
-*   URL state management with `nuqs` - filter values are synced with URL parameters
-*   React Query caching - data is cached and automatically refetched when filters change
-*   Date validation - prevents invalid date ranges and out-of-range dates
-*   Dynamic filter options - accident types and categories are loaded from API
-*   Automatic initial filter - sets filter for 2025 (2025-01-01 to today) on first load
-*   Colored pin markers on map - each category has its own color
-*   Centralized Loading component - used for all React Query loading states
-*   Category color indicators - colored circles next to category checkboxes in filter form
-
-For detailed API documentation, see the [API repository](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API).
-
-## 🔗 Related Projects
+## Related Projects
 
 *   [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) - Backend API server that provides traffic accident data
 
-## 📄 License
+## License
 
 This project is part of an open source initiative for analyzing traffic accidents in the Republic of Serbia.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please open an issue or pull request for any suggestions or changes.
 
 ---
 
-## 📊 Data Source
+## Data Source
 
 This project uses **official open data** from the Republic of Serbia's open data portal:
 
