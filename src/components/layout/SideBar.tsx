@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
 import FilterForm from "@/features/filter/FilterForm";
 import InfoPanel from "@/features/infopanel/InfoPanel";
 
@@ -27,10 +26,10 @@ const SideBar = () => {
         )}
       </Button>
       {isSidebarOpen && (
-        <div className="h-full overflow-y-auto flex flex-col py-4">
-          <div className="px-4"><FilterForm /></div>
-          <Separator className="w-[90%]! mx-auto my-6" />
-          <div className="flex-1 px-4"><InfoPanel /></div>
+        <div className="h-full overflow-y-auto flex flex-col py-4 space-y-10">
+          <div className="px-4"><InfoPanel /></div>
+
+          <div className="flex-1 px-4"><FilterForm /></div>
         </div>
       )}
     </aside>
