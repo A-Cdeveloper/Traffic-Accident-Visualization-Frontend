@@ -72,8 +72,8 @@ const FilterForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
-    // Validate dates
-    const dateValidation = validateDateRange(localFilters.startDate, localFilters.endDate, true)
+        // Validate dates
+        const dateValidation = validateDateRange(localFilters.startDate, localFilters.endDate)
     if (!dateValidation.isValid) {
       toast.error(dateValidation.errorMessage)
       return

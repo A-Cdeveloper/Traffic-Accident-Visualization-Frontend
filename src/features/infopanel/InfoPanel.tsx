@@ -24,7 +24,6 @@ const InfoPanel = () => {
   const { data: filterOptions, isLoading: isLoadingFilters } = useFilters()
 
   const dateValidation = validateDateRange(filters.startDate, filters.endDate)
-  const hasDateFilters = Boolean(filters.startDate || filters.endDate)
 
   // Calculate statistics using memoized helper function
   const accidentsByCategory = useMemo(
@@ -49,7 +48,8 @@ const InfoPanel = () => {
     [accidents?.data, filterOptions?.accidentTypes, filters.accidentType]
   )
 
-  if (hasDateFilters && !dateValidation.isValid) {
+  // If dates are invalid, don't show the panel
+  if (!dateValidation.isValid) {
     return null
   }
 

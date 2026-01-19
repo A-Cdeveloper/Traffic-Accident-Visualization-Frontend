@@ -29,21 +29,11 @@ export type DateValidationResult = {
 
 export const validateDateRange = (
   startDate: string | null | undefined,
-  endDate: string | null | undefined,
-  requireBoth: boolean = false
+  endDate: string | null | undefined
 ): DateValidationResult => {
-  // If both dates are not required and one is missing, validation is ok
-  if (!requireBoth && (!startDate || !endDate)) {
-    return { isValid: true }
-  }
-
-  // If both dates are required, check
-  if (requireBoth && (!startDate || !endDate)) {
-    return { isValid: false, errorMessage: 'Oba datuma su obavezna' }
-  }
-
+  // Both dates are always required
   if (!startDate || !endDate) {
-    return { isValid: true }
+    return { isValid: false, errorMessage: 'Oba datuma su obavezna' }
   }
 
   try {
