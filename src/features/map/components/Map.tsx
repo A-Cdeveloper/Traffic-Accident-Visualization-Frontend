@@ -1,9 +1,11 @@
 import Loading from '@/components/Loading'
 import 'leaflet/dist/leaflet.css'
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.css'
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css'
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 
 import useAccidents from '../../accidents/hooks/useAccidents'
-import AccidentMarker from './AccidentMarker'
+import AccidentMarkerCluster from './AccidentMarkerCluster'
 import { DEFAULT_ZOOM, VLASOTINCE_CENTER } from '../constants'
 import MapResizeHandler from './MapResizeHandler'
 import NoAccidentsFound from '../../accidents/NoAccidentsFound'
@@ -46,9 +48,7 @@ const Map = () => {
       <MapResizeHandler />
       
 
-      {accidentsData.data.map((accident) => (
-        <AccidentMarker key={accident.id} accident={accident} />
-      ))}
+      <AccidentMarkerCluster accidents={accidentsData.data} />
     </MapContainer>
   )
 }

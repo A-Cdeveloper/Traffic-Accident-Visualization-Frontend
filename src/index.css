@@ -249,3 +249,25 @@ html * {
   top: 5px !important;
 
 }
+
+
+
+.marker-cluster-small , 
+.marker-cluster-medium,
+.marker-cluster-large{
+  background: none !important;
+}
+
+
+.marker-cluster-small > div, 
+.marker-cluster-medium > div,
+.marker-cluster-large > div{
+  background-color: rgba(22, 1, 1, 0.9) !important;
+}
+
+
+.marker-cluster-small > div > span, 
+.marker-cluster-medium > div > span,
+.marker-cluster-large > div > span{
+  color: #fff !important;
+}
