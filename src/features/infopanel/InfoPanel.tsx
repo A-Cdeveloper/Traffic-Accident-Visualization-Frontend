@@ -1,12 +1,11 @@
-import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
-import { useMemo } from 'react'
+import Loading from '@/components/Loading'
 import useAccidents from '@/features/accidents/hooks/useAccidents'
 import { useFilters } from '@/features/filter/hooks/useFilters'
-import { validateDateRange } from '@/utils/dates'
-import Loading from '@/components/Loading'
-import { calculateAccidentStats } from './utils/calculateAccidentStats'
-import StatisticSection from './components/StatisticSection'
+import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
+import { useMemo } from 'react'
 import DateRangeSection from './components/DateRangeSection'
+import StatisticSection from './components/StatisticSection'
+import { calculateAccidentStats } from './utils/calculateAccidentStats'
 
 /**
  * InfoPanel component - Displays accident statistics and filter information.
@@ -23,7 +22,7 @@ const InfoPanel = () => {
   const { data: accidents, isLoading: isLoadingAccidents } = useAccidents()
   const { data: filterOptions, isLoading: isLoadingFilters } = useFilters()
 
-  const dateValidation = validateDateRange(filters.startDate, filters.endDate)
+
 
   // Calculate statistics using memoized helper function
   const accidentsByCategory = useMemo(
@@ -48,10 +47,7 @@ const InfoPanel = () => {
     [accidents?.data, filterOptions?.accidentTypes, filters.accidentType]
   )
 
-  // If dates are invalid, don't show the panel
-  if (!dateValidation.isValid) {
-    return null
-  }
+
 
   if (isLoadingAccidents || isLoadingFilters) {
     return <Loading className="size-4" />
