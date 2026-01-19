@@ -1,11 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import React from 'react'
+import { QueryClient } from '@tanstack/react-query'
 import useAccidents from './useAccidents'
 import { getAccidents } from '../api/getAccidents'
 import type { AccidentsSuccessResponse } from '@/types/accedents'
-import { mockAccidents } from '@/test/test-utils'
+import { mockAccidents, createQueryClientWrapper } from '@/test/test-utils'
 
 // Mock nuqs
 const mockUseQueryStates = vi.fn()
@@ -21,6 +20,7 @@ vi.mock('../api/getAccidents')
 
 describe('useAccidents hook', () => {
   let queryClient: QueryClient
+  let wrapper: ReturnType<typeof createQueryClientWrapper>
 
   beforeEach(() => {
     queryClient = new QueryClient({
@@ -30,11 +30,9 @@ describe('useAccidents hook', () => {
         },
       },
     })
+    wrapper = createQueryClientWrapper(queryClient)
     vi.clearAllMocks()
   })
-
-  const wrapper = ({ children }: { children: React.ReactNode }) =>
-    React.createElement(QueryClientProvider, { client: queryClient }, children)
 
   it('should fetch accidents successfully with filters from URL', async () => {
     const mockFilters = {

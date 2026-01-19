@@ -1,4 +1,6 @@
 import type { Accident, FilterOption } from '@/types/accedents'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import React from 'react'
 
 /**
  * Mock accident data for testing
@@ -78,3 +80,11 @@ export const createMockAccident = (overrides?: Partial<Accident>): Accident => (
   description: 'Test accident',
   ...overrides,
 })
+
+/**
+ * Helper function to create QueryClientProvider wrapper for testing
+ */
+export const createQueryClientWrapper = (queryClient: QueryClient) => {
+  return ({ children }: { children: React.ReactNode }) =>
+    React.createElement(QueryClientProvider, { client: queryClient }, children)
+}

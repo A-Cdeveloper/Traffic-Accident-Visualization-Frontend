@@ -1,17 +1,17 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import React from 'react'
+import { QueryClient } from '@tanstack/react-query'
 import { useFilters } from './useFilters'
 import { getFilters } from '../api/getFilters'
 import type { MetadataResponse } from '@/types/accedents'
-import { mockCategories, mockAccidentTypes } from '@/test/test-utils'
+import { mockCategories, mockAccidentTypes, createQueryClientWrapper } from '@/test/test-utils'
 
 // Mock the API function
 vi.mock('../api/getFilters')
 
 describe('useFilters hook', () => {
   let queryClient: QueryClient
+  let wrapper: ReturnType<typeof createQueryClientWrapper>
 
   beforeEach(() => {
     queryClient = new QueryClient({
@@ -21,11 +21,9 @@ describe('useFilters hook', () => {
         },
       },
     })
+    wrapper = createQueryClientWrapper(queryClient)
     vi.clearAllMocks()
   })
-
-  const wrapper = ({ children }: { children: React.ReactNode }) =>
-    React.createElement(QueryClientProvider, { client: queryClient }, children)
 
   it('should fetch filters successfully', async () => {
     const mockResponse: MetadataResponse = {
