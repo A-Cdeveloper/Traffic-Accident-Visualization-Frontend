@@ -33,6 +33,7 @@ const Map = () => {
     <MapContainer
       center={VLASOTINCE_CENTER}
       zoom={DEFAULT_ZOOM}
+      maxZoom={18}
       className="w-full h-full"
       scrollWheelZoom={true}
       zoomControl={false}

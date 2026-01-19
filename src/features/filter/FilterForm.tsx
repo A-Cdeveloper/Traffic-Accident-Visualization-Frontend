@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
@@ -26,27 +26,19 @@ const FilterForm = () => {
   const initialStartDate = '2025-01-01'
   const initialEndDate = maxDate
 
-  // Track if initial filter has been set
-  const hasInitialized = useRef(false)
-
   // Automatically set initial filter if no filters in URL
   useEffect(() => {
-    if (hasInitialized.current) return
-    
     const hasNoFilters = !filters.startDate && !filters.endDate && !filters.accidentType && (!filters.categories || filters.categories.length === 0)
     
     if (hasNoFilters) {
-      hasInitialized.current = true
       setFilters({
         startDate: initialStartDate,
         endDate: initialEndDate,
         accidentType: null,
         categories: null,
       })
-    } else {
-      hasInitialized.current = true
     }
-  }, [filters.startDate, filters.endDate, filters.accidentType, filters.categories, initialEndDate, setFilters])
+  }, [filters.startDate, filters.endDate, filters.accidentType, filters.categories, initialStartDate, initialEndDate, setFilters])
 
 
   // Use filters from URL if they exist, otherwise use initial values
@@ -89,10 +81,10 @@ const FilterForm = () => {
   }
 
   const handleReset = () => {
-    // Reset URL filters
+    // Reset URL filters to initial values (2025-01-01 to today)
     setFilters({
-      startDate: null,
-      endDate: null,
+      startDate: initialStartDate,
+      endDate: initialEndDate,
       accidentType: null,
       categories: null,
     })
