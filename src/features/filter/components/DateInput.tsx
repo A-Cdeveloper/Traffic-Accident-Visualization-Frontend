@@ -21,6 +21,7 @@ const DateInput = ({ id, name, label, value, onChange, min, max, className }: Da
         {label}
       </label>
       <Input
+        data-testid={`date-input-${name}`}
         id={id}
         name={name}
         type="date"

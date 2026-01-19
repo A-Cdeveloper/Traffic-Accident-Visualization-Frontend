@@ -18,6 +18,7 @@ const CategoryCheckbox = ({ category, checked, onCheckedChange, disabled }: Cate
   return (
     <div className="flex items-center space-x-2">
       <Checkbox
+        data-testid={`category-checkbox-${category.value}`}
         id={category.value}
         name={category.value}
         checked={checked}

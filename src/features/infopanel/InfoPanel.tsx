@@ -54,7 +54,7 @@ const InfoPanel = () => {
   }
 
   return (
-    <div className="text-[13px]">
+    <div data-testid="info-panel" className="text-[13px]">
       <div className="grid grid-cols-1 gap-4">
         <DateRangeSection
           startDate={accidents?.startDate}

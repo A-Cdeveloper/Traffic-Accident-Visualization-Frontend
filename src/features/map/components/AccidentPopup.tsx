@@ -29,6 +29,7 @@ const InfoRow = ({ label, value }: InfoRowProps) => (
 const AccidentPopup = ({ accident }: AccidentPopupProps) => {
   return (
     <div 
+      data-testid="accident-popup"
       className="max-w-[100vw]"
     >
       <div className="py-4 px-6">

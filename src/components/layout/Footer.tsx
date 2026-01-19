@@ -54,7 +54,7 @@ const MetaNavigation = () => {
  */
 const Footer = () => {
   return (
-    <footer className="w-full border-t border-border bg-card flex flex-col sm:flex-row sm:items-center justify-between shrink-0 gap-1 sm:gap-4 px-6 text-center sm:text-left py-3">
+    <footer data-testid="footer" className="w-full border-t border-border bg-card flex flex-col sm:flex-row sm:items-center justify-between shrink-0 gap-1 sm:gap-4 px-6 text-center sm:text-left py-3">
       <p className="text-[12px] text-muted-foreground dark:text-muted-foreground/60 mb-0">
       {new Date().getFullYear()} © All rights
         reserved |{" "}

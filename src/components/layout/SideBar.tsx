@@ -9,11 +9,13 @@ const SideBar = () => {
 
   return (
     <aside
+      data-testid="sidebar"
       className={`${
         isSidebarOpen ? "w-65 md:w-85" : "w-0"
       } border-r border-border bg-card transition-all duration-300 overflow-visible shrink-0 relative`}
     >
       <Button
+        data-testid="sidebar-toggle"
         variant="ghost"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="absolute top-0  -right-[42px] z-9999 p-2 hover:bg-muted  transition-colors bg-card border border-border rounded-none cursor-pointer"

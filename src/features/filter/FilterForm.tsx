@@ -109,6 +109,7 @@ const FilterForm = () => {
 
   return (
     <form 
+      data-testid="filter-form"
       onSubmit={handleSubmit}
       onReset={handleReset}
       className="space-y-5 text-[13px] bg-muted p-4 rounded-md"
@@ -163,10 +164,10 @@ const FilterForm = () => {
 
       {/* Buttons */}
       <div className="flex gap-3 pt-2">
-        <Button type="submit" className="flex-1 text-[13px]">
+        <Button data-testid="filter-submit" type="submit" className="flex-1 text-[13px]">
           Primeni filtere
         </Button>
-        <Button type="reset" variant="outline" className="flex-1 text-[13px]">
+        <Button data-testid="filter-reset" type="reset" variant="outline" className="flex-1 text-[13px]">
           Poništi
         </Button>
       </div>

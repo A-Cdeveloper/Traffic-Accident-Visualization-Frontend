@@ -6,7 +6,7 @@ import { Link } from "react-router";
  */
 const ErrorPage = () => {
   return (
-    <div className="flex items-center justify-center min-h-full p-4">
+    <div data-testid="error-page" className="flex items-center justify-center min-h-full p-4">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-4">Something went wrong</h2>
         <p className="text-muted-foreground mb-6">

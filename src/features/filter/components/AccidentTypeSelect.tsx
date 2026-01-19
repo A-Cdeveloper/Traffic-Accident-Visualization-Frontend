@@ -29,7 +29,7 @@ const AccidentTypeSelect = ({ value, onValueChange, options, disabled }: Acciden
         onValueChange={onValueChange}
         disabled={disabled}
       >
-        <SelectTrigger id="accidentType" className="w-full text-[13px]">
+        <SelectTrigger data-testid="accident-type-select" id="accidentType" className="w-full text-[13px]">
           <SelectValue placeholder="Izaberi tip nesreće" />
         </SelectTrigger>
         <SelectContent className="text-[13px]">
