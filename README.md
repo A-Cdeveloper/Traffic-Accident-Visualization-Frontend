@@ -43,6 +43,8 @@ This application is built on top of the [Traffic-Accident-Visualization-API](htt
 *   **sonner** - Toast notifications
 *   **Lucide React** - Icons
 *   **Leaflet & React-Leaflet** - Interactive maps
+*   **Cypress** - E2E testing framework
+*   **Vitest** - Unit testing framework
 *   **Husky** - Git hooks for code quality
 *   **ESLint** - Code linting with jsx-a11y plugin
 
@@ -113,6 +115,18 @@ npm run lint
 
 # Type checking
 npm run type-check
+
+# Unit tests
+npm run test
+
+# Unit tests with coverage
+npm run test:coverage
+
+# E2E tests (headless)
+npm run cypress:run
+
+# E2E tests (interactive)
+npm run cypress:open
 ```
 
 ## Project Structure
@@ -158,9 +172,22 @@ frontend/
 │   ├── utils/               # Utility functions (dates.ts)
 │   ├── main.tsx             # Entry point
 │   └── index.css            # Global styles
+├── cypress/                 # Cypress E2E tests
+│   ├── e2e/                # E2E test files
+│   │   ├── homepage-layout.cy.ts
+│   │   ├── homepage-sidebar.cy.ts
+│   │   ├── homepage-filters.cy.ts
+│   │   └── homepage-map.cy.ts
+│   ├── support/            # Cypress support files
+│   └── fixtures/           # Test fixtures (if needed)
+├── src/
+│   └── test/               # Unit test utilities
+│       ├── setup.ts       # Test setup
+│       └── test-utils.ts  # Test utilities
 ├── .env                     # Environment variables (create)
 ├── .husky/                  # Git hooks
 ├── components.json          # shadcn/ui configuration
+├── cypress.config.ts        # Cypress configuration
 ├── package.json             # Dependencies
 ├── tsconfig.json            # TypeScript configuration
 └── vite.config.ts           # Vite configuration
@@ -216,11 +243,53 @@ The project follows WCAG accessibility standards:
 *   Keyboard navigation support
 *   Screen reader compatibility
 
+## Testing
+
+The project includes comprehensive test coverage using both unit tests and E2E tests.
+
+### Unit Tests (Vitest)
+
+Unit tests are located alongside the source code and use Vitest with React Testing Library:
+
+*   **API Functions** - Testing API calls and error handling
+*   **Custom Hooks** - Testing React hooks (useTheme, useFilters, useAccidents)
+*   **Components** - Testing React components (FilterForm, InfoPanel)
+
+Run unit tests:
+
+```
+npm run test              # Run tests in watch mode
+npm run test:coverage     # Run tests with coverage report
+```
+
+### E2E Tests (Cypress)
+
+E2E tests are organized by feature and cover the full user experience:
+
+*   **homepage-layout.cy.ts** - Layout elements, loading states, error handling
+*   **homepage-sidebar.cy.ts** - Sidebar toggle interactions
+*   **homepage-filters.cy.ts** - Filter form interactions (dates, types, categories, submit/reset)
+*   **homepage-map.cy.ts** - Map display, markers, and popups
+
+Run E2E tests:
+
+```
+npm run cypress:run       # Run tests in headless mode
+npm run cypress:open     # Open Cypress Test Runner (interactive)
+```
+
+**Test Organization:**  
+Tests are split into separate files to enable parallel execution, reducing overall test time from ~2 minutes to ~30-60 seconds.
+
+**Test Selectors:**  
+Components use `data-testid` attributes for reliable test selectors, making tests more maintainable and less brittle.
+
 ### Performance Optimization
 
 The application is optimized for fast loading and efficient resource usage:
 
 **Bundle Optimization:**
+
 *   **Lazy Loading** - All routes (HomePage, Impressum, Kontakt, NotFound) are lazy loaded
 *   **Code Splitting** - Vendor code is separated into chunks for better caching:
     *   `react-vendor` - React core libraries (97.90 KB)
@@ -232,6 +301,7 @@ The application is optimized for fast loading and efficient resource usage:
 *   **Initial Bundle Size** - 189 KB gzipped (down from 223 KB, ~15% reduction)
 
 **Benefits:**
+
 *   Faster initial page load - only essential code is loaded upfront
 *   Better browser caching - vendor chunks are cached separately
 *   Parallel chunk loading - browser loads multiple chunks simultaneously
@@ -257,10 +327,13 @@ The application is optimized for fast loading and efficient resource usage:
 *   ✅ Automatic initial date filter (2025-01-01 to today)
 *   ✅ Bundle optimization with lazy loading and code splitting
 *   ✅ Environment variable validation
+*   ✅ Unit tests with Vitest and React Testing Library
+*   ✅ E2E tests with Cypress
 
 ## API Integration
 
 This frontend application connects to the [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) backend service.
+
 ## Related Projects
 
 *   [Traffic-Accident-Visualization-API](https://github.com/A-Cdeveloper/Traffic-Accident-Visualization-API) - Backend API server that provides traffic accident data
