@@ -9,6 +9,7 @@ import AccidentMarkerCluster from './AccidentMarkerCluster'
 import { DEFAULT_ZOOM, VLASOTINCE_CENTER } from '../constants'
 import MapResizeHandler from './MapResizeHandler'
 import NoAccidentsFound from '../../accidents/NoAccidentsFound'
+import MapLegend from './MapLegend'
 
 /**
  * Map component - Main interactive map displaying traffic accidents.
@@ -32,7 +33,7 @@ const Map = () => {
 
 
   return (
-    <div data-testid="map-container" className="w-full h-full">
+    <div data-testid="map-container" className="w-full h-full relative">
       <MapContainer
         center={VLASOTINCE_CENTER}
         zoom={DEFAULT_ZOOM}
@@ -47,10 +48,10 @@ const Map = () => {
         />
         <ZoomControl position="topright" />
         <MapResizeHandler />
-        
 
         <AccidentMarkerCluster accidents={accidentsData.data} />
       </MapContainer>
+      <MapLegend />
     </div>
   )
 }
