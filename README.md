@@ -1,4 +1,4 @@
-# Traffic Accident Vlasotince (2020-2025)
+# Traffic Accident Vlasotince
 
 Frontend application for visualizing traffic accident data for Vlasotince municipality. The application displays traffic accidents on an interactive map and provides filtering capabilities by accident type, category, and time interval.
 
@@ -12,7 +12,7 @@ This project is a React frontend application that enables users to:
 *   Filter accidents by time interval (date range: 2020-01-01 to today)
 *   View accident statistics in the info panel (total count, counts by category and type)
 *   Shareable filter URLs - filter state is synced with URL parameters
-*   Visualize accident data from 2020-2025
+*   Visualize accident data
 *   Automatic initial date filter (2025-01-01 to today) on first load
 *   Colored pin markers on map - each category has its own color
 *   Centralized Loading component for all React Query requests
@@ -20,7 +20,7 @@ This project is a React frontend application that enables users to:
 
 **Data Coverage:**
 
-*   Time period: 2020-2025
+*   Time period: Available historical data
 *   Municipality: Vlasotince only
 *   Update frequency: Monthly updates
 

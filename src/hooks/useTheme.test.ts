@@ -37,12 +37,12 @@ describe('useTheme hook', () => {
     document.documentElement.classList.remove('dark')
   })
 
-  it('should initialize with "light" theme when localStorage is empty', () => {
+  it('should initialize with "dark" theme when localStorage is empty', () => {
     const { result } = renderHook(() => useTheme())
 
-    expect(result.current[0]).toBe('light')
-    expect(localStorage.getItem('theme')).toBe('light')
-    expect(document.documentElement.classList.contains('dark')).toBe(false)
+    expect(result.current[0]).toBe('dark')
+    expect(localStorage.getItem('theme')).toBe('dark')
+    expect(document.documentElement.classList.contains('dark')).toBe(true)
   })
 
   it('should initialize with theme from localStorage', () => {
