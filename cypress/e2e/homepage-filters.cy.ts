@@ -26,14 +26,26 @@ describe('Homepage Filters', () => {
     cy.get('[data-testid="accident-type-select"]').should('contain', 'Svi tipovi');
   });
 
-  it('should allow toggling category checkbox', () => {
+  it('should allow selecting categories in multiselect', () => {
+    // Open multiselect popover
+    cy.get('[data-testid="category-multiselect"]').click();
+    
+    // Select first category
     cy.get('[data-testid^="category-checkbox-"]').first().as('firstCheckbox');
     cy.get('@firstCheckbox').then(($checkbox) => {
       const checkboxId = $checkbox.attr('id');
       cy.get(`label[for="${checkboxId}"]`).click();
       cy.get('@firstCheckbox').should('have.attr', 'data-state', 'checked');
+      
+      // Verify button text shows selected count
+      cy.get('[data-testid="category-multiselect"]').should('contain', '1 kategorija');
+      
+      // Deselect
       cy.get(`label[for="${checkboxId}"]`).click();
       cy.get('@firstCheckbox').should('not.have.attr', 'data-state', 'checked');
+      
+      // Verify button text shows placeholder
+      cy.get('[data-testid="category-multiselect"]').should('contain', 'Izaberi kategorije');
     });
   });
 

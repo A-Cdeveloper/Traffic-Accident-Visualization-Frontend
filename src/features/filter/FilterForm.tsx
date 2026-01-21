@@ -5,7 +5,7 @@ import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
 import { useFilters } from './hooks/useFilters'
 import { validateDateRange } from '@/utils/dates'
 import DateInput from './components/DateInput'
-import CategoryCheckbox from './components/CategoryCheckbox'
+import CategoryMultiSelect from './components/CategoryMultiSelect'
 import AccidentTypeSelect from './components/AccidentTypeSelect'
 
 const FilterForm = () => {
@@ -98,14 +98,6 @@ const FilterForm = () => {
     })
   }
 
-  const handleCategoryToggle = (categoryValue: string, checked: boolean) => {
-    setLocalFilters(prev => ({
-      ...prev,
-      categories: checked
-        ? [...prev.categories, categoryValue]
-        : prev.categories.filter(cat => cat !== categoryValue)
-    }))
-  }
 
   return (
     <form 
@@ -147,20 +139,12 @@ const FilterForm = () => {
       />
 
       {/* Categories */}
-      <fieldset className="space-y-2">
-        <legend className="sr-only">Kategorije nesreća</legend>
-        <div className="space-y-3">
-          {filterOptions?.categories.map((category) => (
-            <CategoryCheckbox
-              key={category.value}
-              category={category}
-              checked={localFilters.categories.includes(category.value)}
-              onCheckedChange={(checked) => handleCategoryToggle(category.value, checked)}
-              disabled={isLoadingOptions}
-            />
-          ))}
-        </div>
-      </fieldset>
+      <CategoryMultiSelect
+        options={filterOptions?.categories}
+        value={localFilters.categories}
+        onValueChange={(categories) => setLocalFilters(prev => ({ ...prev, categories }))}
+        disabled={isLoadingOptions}
+      />
 
       {/* Buttons */}
       <div className="flex gap-3 pt-2">

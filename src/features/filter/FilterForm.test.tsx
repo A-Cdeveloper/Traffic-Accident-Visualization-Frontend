@@ -53,19 +53,31 @@ describe('FilterForm', () => {
   })
 
   // Helper function to render component and return form elements
-  const renderFilterForm = () => {
+  const renderFilterForm = async (openMultiselect = true) => {
     render(<FilterForm />, { wrapper })
+    const user = userEvent.setup()
+    
+    const multiselectButton = screen.getByTestId('category-multiselect')
+    
+    if (openMultiselect) {
+      // Open multiselect popover
+      await user.click(multiselectButton)
+      // Wait for popover to open by finding first checkbox
+      await screen.findByLabelText(mockCategories[0].label)
+    }
+    
     return {
       startDateInput: screen.getByLabelText(/datum od/i),
       endDateInput: screen.getByLabelText(/datum do/i),
       submitButton: screen.getByRole('button', { name: /primeni filtere/i }),
       resetButton: screen.getByRole('button', { name: /poništi/i }),
+      multiselectButton,
       getCategoryCheckbox: (label: string | RegExp) => screen.getByLabelText(label),
     }
   }
 
-  it('should render component successfully', () => {
-    const { startDateInput, endDateInput, getCategoryCheckbox } = renderFilterForm()
+  it('should render component successfully', async () => {
+    const { startDateInput, endDateInput, getCategoryCheckbox } = await renderFilterForm()
 
     expect(startDateInput).toBeInTheDocument()
     expect(endDateInput).toBeInTheDocument()
@@ -76,8 +88,8 @@ describe('FilterForm', () => {
     expect(getCategoryCheckbox(/Parkirana vozila/i)).toBeInTheDocument()
   })
 
-  it('should render all category checkboxes', () => {
-    const { getCategoryCheckbox } = renderFilterForm()
+  it('should render all category checkboxes', async () => {
+    const { getCategoryCheckbox } = await renderFilterForm()
 
     mockCategories.forEach((category) => {
       expect(getCategoryCheckbox(category.label)).toBeInTheDocument()
@@ -86,7 +98,7 @@ describe('FilterForm', () => {
 
   it('should update start date when user types', async () => {
     const user = userEvent.setup()
-    const { startDateInput } = renderFilterForm()
+    const { startDateInput } = await renderFilterForm(false)
     await user.clear(startDateInput)
     await user.type(startDateInput, '2025-01-15')
 
@@ -95,7 +107,7 @@ describe('FilterForm', () => {
 
   it('should update end date when user types', async () => {
     const user = userEvent.setup()
-    const { endDateInput } = renderFilterForm()
+    const { endDateInput } = await renderFilterForm(false)
     await user.clear(endDateInput)
     await user.type(endDateInput, '2025-01-31')
 
@@ -104,7 +116,7 @@ describe('FilterForm', () => {
 
   it('should toggle category checkbox when clicked', async () => {
     const user = userEvent.setup()
-    const { getCategoryCheckbox } = renderFilterForm()
+    const { getCategoryCheckbox } = await renderFilterForm()
 
     const checkbox = getCategoryCheckbox(mockCategories[0].label)
     expect(checkbox).not.toBeChecked()
@@ -118,7 +130,7 @@ describe('FilterForm', () => {
 
   it('should call setFilters with correct values on submit', async () => {
     const user = userEvent.setup()
-    const { startDateInput, endDateInput, submitButton } = renderFilterForm()
+    const { startDateInput, endDateInput, submitButton } = await renderFilterForm(false)
 
     await user.clear(startDateInput)
     await user.type(startDateInput, '2025-01-15')
@@ -139,7 +151,7 @@ describe('FilterForm', () => {
 
   it('should reset form to initial values when reset button is clicked', async () => {
     const user = userEvent.setup()
-    const { startDateInput, endDateInput, resetButton } = renderFilterForm()
+    const { startDateInput, endDateInput, resetButton } = await renderFilterForm(false)
 
     // Change values
     await user.clear(startDateInput)
