@@ -5,7 +5,13 @@ import FilterForm from "@/features/filter/FilterForm";
 import InfoPanel from "@/features/infopanel/InfoPanel";
 
 const SideBar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  // Initialize sidebar as closed on small screens (< 768px)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768; // md breakpoint
+    }
+    return true;
+  });
 
   return (
     <aside
