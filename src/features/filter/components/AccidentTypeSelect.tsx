@@ -32,7 +32,7 @@ const AccidentTypeSelect = ({ value, onValueChange, options, disabled }: Acciden
         <SelectTrigger data-testid="accident-type-select" id="accidentType" className="w-full text-[13px]">
           <SelectValue placeholder="Izaberi tip nesreće" />
         </SelectTrigger>
-        <SelectContent className="text-[13px]">
+        <SelectContent className="text-[13px] z-[100000000]">
           <SelectItem value="all">Svi tipovi</SelectItem>
           {options?.map((option) => (
             <SelectItem key={option.value} value={option.value}>

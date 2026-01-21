@@ -15,10 +15,10 @@ const AppLayout = () => {
     <div className="h-screen w-full flex flex-col overflow-hidden">
       <Header />
 
-      <main className="flex-1 flex overflow-hidden relative">
+      <main className="flex-1 relative overflow-hidden">
         {!hideSidebar && <SideBar />}
 
-        <section className="flex-1 bg-background overflow-y-auto scroll-auto">
+        <section className="w-full h-full bg-background">
           <ErrorBoundary>
             <Suspense fallback={<Loading />}>
             <Outlet />

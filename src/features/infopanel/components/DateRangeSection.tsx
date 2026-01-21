@@ -13,10 +13,10 @@ const DateRangeSection = ({ startDate, endDate }: DateRangeSectionProps) => {
 
   return (
     <div className="space-y-2">
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2">
         <div>
           <span>Period:</span>
-          <p className="text-muted-foreground">{formatDate(startDate)} - {formatDate(endDate)}</p>
+          <p className="text-muted-foreground w-full text-wrap">{formatDate(startDate)} - {formatDate(endDate)}</p>
         </div>
 
       </div>

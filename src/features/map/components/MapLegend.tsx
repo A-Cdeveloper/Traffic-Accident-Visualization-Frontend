@@ -9,7 +9,7 @@ const MapLegend = () => {
 
   return (
     <div 
-      className="absolute bottom-4 right-4 z-9999999 bg-card border border-border rounded-lg shadow-lg p-2 py-3 max-w-sm pointer-events-none"
+      className="absolute bottom-8 right-4 z-9999999 bg-card border border-border rounded-lg shadow-lg p-2 py-3 max-w-sm pointer-events-none"
       data-testid="map-legend"
     >
       <div className="space-y-2">

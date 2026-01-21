@@ -12,7 +12,7 @@ const SideBar = () => {
       data-testid="sidebar"
       className={`${
         isSidebarOpen ? "w-65 md:w-85" : "w-0"
-      } border-r border-border bg-card transition-all duration-300 overflow-visible shrink-0 relative`}
+      } absolute left-0 top-0 h-auto max-h-[75vh] border-r border-b border-border bg-card transition-all duration-300 overflow-visible z-99999999`}
     >
       <Button
         data-testid="sidebar-toggle"
@@ -28,10 +28,10 @@ const SideBar = () => {
         )}
       </Button>
       {isSidebarOpen && (
-        <div className="h-full overflow-y-auto flex flex-col py-4 space-y-10">
+        <div className="max-h-[75vh] overflow-y-auto flex flex-col py-4 space-y-10">
           <div className="px-6"><InfoPanel /></div>
 
-          <div className="flex-1 px-4"><FilterForm /></div>
+          <div className="px-4"><FilterForm /></div>
         </div>
       )}
     </aside>

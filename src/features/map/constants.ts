@@ -1,12 +1,12 @@
 /**
  * Center coordinates for Vlasotince municipality map view.
  */
-export const VLASOTINCE_CENTER: [number, number] = [42.965, 22.14]
+export const VLASOTINCE_CENTER: [number, number] = [42.965, 22.12]
 
 /**
  * Default zoom level for the map.
  */
-export const DEFAULT_ZOOM = 14
+export const DEFAULT_ZOOM = 13
 
 /**
  * Maps accident category labels to color codes for markers and UI elements.
