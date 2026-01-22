@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
@@ -20,16 +20,21 @@ const FilterForm = () => {
 
   // Date constraints
   const minDate = '2020-01-01'
-  const maxDate = new Date().toISOString().split('T')[0] // Today in YYYY-MM-DD format
+  // Memoize maxDate to prevent recalculation on every render
+  const maxDate = useMemo(() => new Date().toISOString().split('T')[0], [])
 
   // Initial filter: 01.01.2025 to today
   const initialStartDate = '2025-01-01'
   const initialEndDate = maxDate
 
+  // Compute derived state outside effect
+  const hasNoFilters = !filters.startDate && 
+                       !filters.endDate && 
+                       !filters.accidentType && 
+                       (!filters.categories || filters.categories.length === 0)
+
   // Automatically set initial filter if no filters in URL
   useEffect(() => {
-    const hasNoFilters = !filters.startDate && !filters.endDate && !filters.accidentType && (!filters.categories || filters.categories.length === 0)
-    
     if (hasNoFilters) {
       setFilters({
         startDate: initialStartDate,
@@ -38,7 +43,7 @@ const FilterForm = () => {
         categories: null,
       })
     }
-  }, [filters.startDate, filters.endDate, filters.accidentType, filters.categories, initialStartDate, initialEndDate, setFilters])
+  }, [hasNoFilters, initialStartDate, initialEndDate, setFilters])
 
 
   // Use filters from URL if they exist, otherwise use initial values
@@ -142,7 +147,12 @@ const FilterForm = () => {
       <CategoryMultiSelect
         options={filterOptions?.categories}
         value={localFilters.categories}
-        onValueChange={(categories) => setLocalFilters(prev => ({ ...prev, categories }))}
+        onValueChange={(update) => {
+          setLocalFilters(prev => ({
+            ...prev,
+            categories: typeof update === 'function' ? update(prev.categories) : update
+          }))
+        }}
         disabled={isLoadingOptions}
       />
 

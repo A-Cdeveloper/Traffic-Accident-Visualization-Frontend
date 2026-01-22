@@ -1,5 +1,6 @@
 import useTheme from '@/hooks/useTheme';
-import { Moon, Sun } from 'lucide-react';
+import Moon from 'lucide-react/dist/esm/icons/moon.js';
+import Sun from 'lucide-react/dist/esm/icons/sun.js';
 import { Button } from '../ui/button';
 
 const ThemeSwitch = () => {

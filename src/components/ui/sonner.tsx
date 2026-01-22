@@ -1,10 +1,8 @@
-import {
-  CircleCheckIcon,
-  InfoIcon,
-  Loader2Icon,
-  OctagonXIcon,
-  TriangleAlertIcon,
-} from "lucide-react"
+import CircleCheckIcon from "lucide-react/dist/esm/icons/circle-check.js";
+import InfoIcon from "lucide-react/dist/esm/icons/info.js";
+import Loader2Icon from "lucide-react/dist/esm/icons/loader-2.js";
+import OctagonXIcon from "lucide-react/dist/esm/icons/octagon-x.js";
+import TriangleAlertIcon from "lucide-react/dist/esm/icons/triangle-alert.js";
 import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 

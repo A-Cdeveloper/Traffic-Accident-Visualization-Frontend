@@ -1,4 +1,4 @@
-import { AlertCircle } from 'lucide-react'
+import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle.js'
 
 const NoAccidentsFound = () => {
   return (

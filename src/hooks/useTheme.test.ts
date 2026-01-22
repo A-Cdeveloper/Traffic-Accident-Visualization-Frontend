@@ -41,12 +41,12 @@ describe('useTheme hook', () => {
     const { result } = renderHook(() => useTheme())
 
     expect(result.current[0]).toBe('dark')
-    expect(localStorage.getItem('theme')).toBe('dark')
+    expect(localStorage.getItem('theme:v1')).toBe('dark')
     expect(document.documentElement.classList.contains('dark')).toBe(true)
   })
 
   it('should initialize with theme from localStorage', () => {
-    localStorage.setItem('theme', 'dark')
+    localStorage.setItem('theme:v1', 'dark')
 
     const { result } = renderHook(() => useTheme())
 
@@ -62,12 +62,12 @@ describe('useTheme hook', () => {
     })
 
     expect(result.current[0]).toBe('dark')
-    expect(localStorage.getItem('theme')).toBe('dark')
+    expect(localStorage.getItem('theme:v1')).toBe('dark')
     expect(document.documentElement.classList.contains('dark')).toBe(true)
   })
 
   it('should remove dark class when theme is set to light', () => {
-    localStorage.setItem('theme', 'dark')
+    localStorage.setItem('theme:v1', 'dark')
     const { result } = renderHook(() => useTheme())
 
     act(() => {
@@ -75,7 +75,7 @@ describe('useTheme hook', () => {
     })
 
     expect(result.current[0]).toBe('light')
-    expect(localStorage.getItem('theme')).toBe('light')
+    expect(localStorage.getItem('theme:v1')).toBe('light')
     expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
 
@@ -86,13 +86,13 @@ describe('useTheme hook', () => {
       result.current[1]('dark')
     })
 
-    expect(localStorage.getItem('theme')).toBe('dark')
+    expect(localStorage.getItem('theme:v1')).toBe('dark')
 
     act(() => {
       result.current[1]('light')
     })
 
-    expect(localStorage.getItem('theme')).toBe('light')
+    expect(localStorage.getItem('theme:v1')).toBe('light')
   })
 
   it('should return a tuple with theme and setTheme function', () => {

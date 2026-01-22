@@ -31,8 +31,13 @@ const MapLegend = () => {
       return allCategories
     }
     
+    // Build index map for O(1) lookups instead of repeated .find() calls
+    const categoryByValue = new Map(
+      filterOptions.categories.map(cat => [cat.value, cat.label])
+    )
+    
     const selectedLabels = selectedCategoryValues
-      .map(value => filterOptions.categories?.find(cat => cat.value === value)?.label)
+      .map(value => categoryByValue.get(value))
       .filter((label): label is string => !!label && label in categoryColorMap)
     
     return allCategories.filter(([label]) => selectedLabels.includes(label))

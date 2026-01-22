@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import Loading from '@/components/Loading'
 import 'leaflet/dist/leaflet.css'
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.css'
@@ -15,22 +16,18 @@ import MapLegend from './MapLegend'
  * Map component - Main interactive map displaying traffic accidents.
  * Renders a Leaflet map with OpenStreetMap tiles, zoom controls, and accident markers.
  * Shows loading state while fetching data and empty state when no accidents are found.
+ * Memoized to prevent unnecessary re-renders when parent component updates.
  */
-const Map = () => {
-
+const Map = memo(function Map() {
   const { data: accidentsData, isLoading: isLoadingAccidents } = useAccidents()
 
   if (isLoadingAccidents) {
     return <Loading />
   }
 
-
   if (!accidentsData) {
-    //toast.error('No accidents found')
     return <NoAccidentsFound />
   }
-
-
 
   return (
     <div data-testid="map-container" className="w-full h-full relative">
@@ -54,6 +51,6 @@ const Map = () => {
       <MapLegend />
     </div>
   )
-}
+})
 
 export default Map

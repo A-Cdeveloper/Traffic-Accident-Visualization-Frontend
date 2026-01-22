@@ -1,4 +1,4 @@
-import { useQuery, type UseQueryResult } from '@tanstack/react-query'
+import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query'
 import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs'
 import { getAccidents } from '../api/getAccidents'
 import type { AccidentsSuccessResponse } from '@/types/accedents'
@@ -14,6 +14,8 @@ const useAccidents = (): UseQueryResult<AccidentsSuccessResponse, Error> => {
   return useQuery<AccidentsSuccessResponse, Error>({
     queryKey: ['accidents', filters.startDate, filters.endDate, filters.accidentType, filters.categories],
     queryFn: () => getAccidents(filters),
+    placeholderData: keepPreviousData,
+
   })
 }
 

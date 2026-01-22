@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 import type { Accident } from '@/types/accedents'
 import { getMarkerIcon } from '../utils/getMarkerIcon'
@@ -11,8 +12,9 @@ type AccidentMarkerProps = {
  * AccidentMarker component - Renders a single accident marker on the map.
  * Uses a custom colored pin icon based on the accident category.
  * Displays a popup with detailed accident information when clicked.
+ * Memoized to prevent unnecessary re-renders when parent component updates.
  */
-const AccidentMarker = ({ accident }: AccidentMarkerProps) => {
+const AccidentMarker = memo(function AccidentMarker({ accident }: AccidentMarkerProps) {
   return (
     <Marker 
       position={[accident.latitude, accident.longitude]}
@@ -23,6 +25,6 @@ const AccidentMarker = ({ accident }: AccidentMarkerProps) => {
       </Popup>
     </Marker>
   )
-}
+})
 
 export default AccidentMarker

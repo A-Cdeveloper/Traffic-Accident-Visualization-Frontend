@@ -2,14 +2,14 @@ import { useState } from 'react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { ChevronDownIcon } from 'lucide-react'
+import ChevronDownIcon from 'lucide-react/dist/esm/icons/chevron-down.js'
 import type { FilterOption } from '@/types/accedents'
 import { cn } from '@/lib/utils'
 
 type CategoryMultiSelectProps = {
   options: FilterOption[] | undefined
   value: string[]
-  onValueChange: (value: string[]) => void
+  onValueChange: (value: string[] | ((prev: string[]) => string[])) => void
   disabled?: boolean
 }
 
@@ -22,9 +22,11 @@ const CategoryMultiSelect = ({ options, value, onValueChange, disabled }: Catego
 
   const handleToggle = (categoryValue: string, checked: boolean) => {
     if (checked) {
-      onValueChange([...value, categoryValue])
+      // Use functional update to prevent stale closures
+      onValueChange(prev => [...prev, categoryValue])
     } else {
-      onValueChange(value.filter(cat => cat !== categoryValue))
+      // Use functional update to prevent stale closures
+      onValueChange(prev => prev.filter(cat => cat !== categoryValue))
     }
   }
 
