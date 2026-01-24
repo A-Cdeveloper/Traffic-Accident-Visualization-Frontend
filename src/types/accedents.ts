@@ -54,7 +54,9 @@ export type AccidentTypes = FilterOption[];
 export type AccidentCategories = FilterOption[];
 
 // Complete response from metadata endpoint
+// src/types/accedents.ts
 export type MetadataResponse = {
   accidentTypes: AccidentTypes;
   categories: AccidentCategories;
+  lastUpdated?: string; 
 };

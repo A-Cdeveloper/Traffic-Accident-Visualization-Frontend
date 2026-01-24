@@ -6,7 +6,7 @@ export const formatDate = (dateString: string | null | undefined): string => {
   try {
     const date = parseISO(dateString)
     if (!isValid(date)) return '-'
-    return format(date, 'dd.MM.yyyy', { locale: sr })
+    return format(date, 'dd. MM. yyyy', { locale: sr })
   } catch {
     return '-'
   }
