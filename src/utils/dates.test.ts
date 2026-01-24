@@ -3,7 +3,7 @@ import { formatDate, formatDateTime, validateDateRange } from './dates'
 /* test formatDate */
 describe('formatDate', () => {
   it('formats date correctly', () => {
-    expect(formatDate('2025-01-15')).toBe('15.01.2025')
+    expect(formatDate('2025-01-15')).toBe('15. 01. 2025')
   })
 
   it('returns "-" for null date', () => {
